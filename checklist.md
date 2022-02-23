@@ -7,11 +7,12 @@ DEVE ser possível cadastrar, atualizar, visualizar e apagar contatos da agenda;
 A aplicação DEVE ser feita em React, back em Node e Banco dados em SQL.
 
 Backend 
-   - [ ] nodejs 
-   - [ ] express 
-   - [ ] sequelize 
+   - [x] nodejs 
+   - [x] express 
+   - [x] sequelize 
    - [ ] yup 
-   - [ ] testes 
+   - [x] testes 
+   - [ ] upload da imagem
    - [ ] aws 
    - [ ] ci/cd
 Frontend 
