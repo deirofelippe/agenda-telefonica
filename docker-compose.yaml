@@ -21,9 +21,9 @@ services:
       volumes:
         - "./frontend:/app"
       ports:
-        - "3000:3000"
+        - "3001:3000"
       depends_on:
-        - backend
+        - agenda-backend
 
    mysql:
       image: mysql:8.0
