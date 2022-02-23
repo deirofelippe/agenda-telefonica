@@ -20,6 +20,8 @@ module.exports = {
             email: faker.internet.email(),
             phone: faker.phone.phoneNumber('#####-####'),
             image: faker.image.imageUrl(),
+            createdAt: new Date(),
+            updatedAt: new Date(),
          };
 
          contacts.push(contact);
