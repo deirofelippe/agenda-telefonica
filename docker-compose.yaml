@@ -1,0 +1,53 @@
+version: '3.2'
+
+services:
+   agenda-backend:
+      build:
+         context: ./backend
+         dockerfile: Dockerfile
+      container_name: agenda-backend
+      volumes:
+        - "./backend:/app"
+      ports:
+        - "3000:3000"
+      depends_on:
+        - mysql
+
+   agenda-frontend:
+      build:
+         context: ./frontend
+         dockerfile: Dockerfile
+      container_name: agenda-frontend
+      volumes:
+        - "./frontend:/app"
+      ports:
+        - "3000:3000"
+      depends_on:
+        - backend
+
+   mysql:
+      image: mysql:8.0
+      container_name: mysql
+      restart: always
+      ports:
+        - "6033:3306"
+      volumes:
+        - "v_mysql:/var/lib/mysql"
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: agenda
+
+   phpmyadmin:
+      image: phpmyadmin/phpmyadmin:5.1.1
+      container_name: phpmyadmin
+      restart: always
+      ports:
+        - "8081:80"
+      environment:
+        PMA_HOST: mysql
+      depends_on:
+        - mysql
+
+volumes:
+   v_mysql:
+      external: true
