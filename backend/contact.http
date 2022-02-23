@@ -1,0 +1,27 @@
+POST http://localhost:3000/contact HTTP/1.1
+content-type: application/json
+
+{
+    "name": "eu",
+    "email": "eua@mail.com",
+    "phone": "91235-5678",
+    "image": "/path/image.png"
+}
+
+###
+GET http://localhost:3000/contact HTTP/1.1
+
+###
+GET http://localhost:3000/contact/b4a24da6-33b3-47fe-9c44-c8b2b2c43ef4 HTTP/1.1
+
+###
+PUT http://localhost:3000/contact/b4a24da6-33b3-47fe-9c44-c8b2b2c43ef4 HTTP/1.1
+content-type: application/json
+
+{
+    "name": "euu",
+    "email": "euasdua@mail.com"
+}
+
+###
+DELETE http://localhost:3000/contact/0e430ce1-ab22-4b2f-b150-2b42b5797019 HTTP/1.1
