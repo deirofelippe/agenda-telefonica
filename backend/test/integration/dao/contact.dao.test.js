@@ -47,7 +47,6 @@ describe("contacts.dao", () => {
          await model.bulkCreate(contacts)
 
          const notEmptyResult = await dao.findAll();
-         console.log(notEmptyResult);
 
          expect(notEmptyResult).toHaveLength(3);
       });
