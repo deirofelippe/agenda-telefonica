@@ -40,8 +40,7 @@ async function findById(id) {
 async function update(newContact) {
    try {
       const { id } = newContact;
-      const result = await model.update(newContact, { where: { id } });
-      return result;
+      await model.update(newContact, { where: { id } });
    } catch (error) {
       console.log("[BD ERROR] " + error);
       throw 'error'
@@ -50,9 +49,7 @@ async function update(newContact) {
 
 async function remove(id) {
    try {
-      const result = await model.destroy({ where: { id } });
-
-      return result;
+      await model.destroy({ where: { id } });
    } catch (error) {
       console.log("[BD ERROR] " + error);
       throw 'error'

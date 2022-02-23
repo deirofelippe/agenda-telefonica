@@ -24,6 +24,7 @@
       "start": "node src/server.js",
       "dev": "nodemon src/server.js",
       "test:simple": "cross-env NODE_ENV=test npx jest --config jest.config.js --runInBand --detectOpenHandles",
+      "test:simple:w": "cross-env NODE_ENV=test npx jest --config jest.config.js --runInBand --detectOpenHandles --watch",
       "test:cov": "cross-env NODE_ENV=test npx jest --config jest.config.js --coverage --runInBand --no-cache",
       "test:w:a": "cross-env NODE_ENV=test npx jest --config jest.config.js --watchAll --runInBand",
       "pretest": "cross-env NODE_ENV=test npx sequelize db:migrate",
