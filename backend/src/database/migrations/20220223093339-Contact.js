@@ -19,11 +19,11 @@ module.exports = {
          },
          email: {
             type: Sequelize.DataTypes.STRING(100),
-            allowNull: false,
+            allowNull: true,
          },
          image: {
             type: Sequelize.DataTypes.STRING(100),
-            allowNull: false,
+            allowNull: true,
          },
          createdAt: Sequelize.DataTypes.DATE,
          updatedAt: Sequelize.DataTypes.DATE,
