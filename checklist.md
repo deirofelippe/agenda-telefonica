@@ -16,6 +16,7 @@ Backend
    - [ ] aws 
    - [ ] ci/cd
 Frontend 
+   - [x] html e css
    - [ ] react 
    - [ ] unform 
    - [ ] hooks 
