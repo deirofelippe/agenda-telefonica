@@ -7,7 +7,7 @@ async function findAll(req, res) {
 
       res.status(200).json({ contacts });
    } catch (error) {
-      res.json({ error });
+      res.status(500).json({ error });
    }
 }
 
@@ -22,7 +22,7 @@ async function create(req, res) {
 
       res.status(201).json({ contact: createdContact });
    } catch (error) {
-      res.json({ error });
+      res.status(500).json({ error });
    }
 }
 
@@ -37,7 +37,7 @@ async function update(req, res) {
 
       res.status(204).end();
    } catch (error) {
-      res.json({ error });
+      res.status(500).json({ error });
    }
 }
 
@@ -47,7 +47,7 @@ async function remove(req, res) {
 
       res.status(204).end();
    } catch (error) {
-      res.json({ error });
+      res.status(500).json({ error });
    }
 }
 
@@ -57,7 +57,7 @@ async function findById(req, res) {
 
       res.status(200).json({ contact });
    } catch (error) {
-      res.json({ error });
+      res.status(500).json({ error });
    }
 }
 
