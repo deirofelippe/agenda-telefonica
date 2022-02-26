@@ -2,7 +2,7 @@
 
 ## Como usar com docker?
 
-1. `sh executar-sistema.sh`
+1. `sh run-app.sh`
 
 **OU**
 
