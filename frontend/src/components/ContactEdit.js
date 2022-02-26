@@ -10,7 +10,7 @@ const ContactEdit = () => {
 
    const { findContact, editContact } = usePhoneBook()
 
-   const [editedContact, setEditedContact] = useState({
+   const [contactToEdit, setContactToEdit] = useState({
       name: '',
       email: '',
       phone: '',
@@ -18,15 +18,14 @@ const ContactEdit = () => {
 
    useEffect(() => {
       const contactFound = findContact(id)
-      setEditedContact(contactFound)
+      setContactToEdit(contactFound)
    }, [findContact, id]);
 
    const change = (event) => {
       const { name, value } = event.target;
-      console.log(editedContact);
 
-      setEditedContact({
-         ...editedContact,
+      setContactToEdit({
+         ...contactToEdit,
          [name]: value,
       });
    };
@@ -34,74 +33,68 @@ const ContactEdit = () => {
    const edit = async (event) => {
       event.preventDefault();
 
-      // const url = process.env.REACT_APP_BACKEND_URL;
+      const url = process.env.REACT_APP_BACKEND_URL;
 
-      // const res = await fetch(`${url}/contact/${id}`, {
-      //    method: "PUT",
-      //    headers: {
-      //       "Content-Type": "application/json",
-      //    },
-      //    body: JSON.stringify({ ...contact }),
-      // });
+      const res = await fetch(`${url}/contact/${id}`, {
+         method: "PUT",
+         headers: {
+            "Content-Type": "application/json",
+         },
+         body: JSON.stringify({ ...contactToEdit }),
+      });
 
-      // const body = await res.json();
+      await res.json();
 
-      // if (!res.ok) {
-      //    return
-      // }
+      if (!res.ok) {
+         return
+      }
 
-      editContact(editedContact)
+      editContact(contactToEdit)
 
       history.push('/contact')
    };
 
    return (
       <>
-         <header class="header">
-            <nav class="navbar">
+         <header className="header">
+            <nav className="navbar">
                <Link to="/contact">
-                  <i class="fas fa-times fa-lg"></i>
+                  <i className="fas fa-times fa-lg"></i>
                </Link>
                <Link to="#" onClick={edit}>
-                  <i class="fas fa-save fa-lg"></i>
+                  <i className="fas fa-save fa-lg"></i>
                </Link>
             </nav>
          </header>
 
          <main>
-            <section>
+            <section className='section'>
                <form action="#">
-                  <div class="form-group">
-                     <label htmlFor="image">Imagem</label>
-                     <input type="file"
-                        name="image"
-                        id="image" />
-                  </div>
-                  <div class="form-group">
+                  <div className="form-group">
                      <label htmlFor="name">Nome</label>
                      <input id="name"
                         name="name"
                         type="text"
                         onChange={change}
-                        value={editedContact?.name}
+                        value={contactToEdit?.name}
                         placeholder="Seu nome" />
                   </div>
-                  <div class="form-group">
+                  <div className="form-group">
                      <label htmlFor="phone">Número</label>
                      <input id="phone"
                         name="phone"
                         type="text"
                         onChange={change}
-                        value={editedContact?.phone}
+                        value={contactToEdit?.phone}
                         placeholder="91234-5678" />
                   </div>
-                  <div class="form-group">
+                  <div className="form-group">
                      <label htmlFor="email">Email</label>
                      <input id="email"
                         name="email"
                         type="text"
                         onChange={change}
-                        value={editedContact?.email}
+                        value={contactToEdit?.email}
                         placeholder="Seu email" />
                   </div>
                </form>

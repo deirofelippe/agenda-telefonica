@@ -40,41 +40,36 @@ const ContactForm = () => {
 
       const { contact: createdContact } = await res.json();
 
-      console.log(createdContact);
       createContact(createdContact)
 
-      // history.push('/contact')
+      history.push('/contact')
    };
 
    return (
       <>
-         <header class="header">
-            <nav class="navbar">
+         <header className="header">
+            <nav className="navbar">
                <Link to="/contact">
-                  <i class="fas fa-times fa-lg"></i>
+                  <i className="fas fa-times fa-lg"></i>
                </Link>
                <Link to="#" onClick={create}>
-                  <i class="fas fa-save fa-lg"></i>
+                  <i className="fas fa-save fa-lg"></i>
                </Link>
             </nav>
          </header>
 
          <main>
-            <section>
+            <section className='section'>
                <form action="#">
-                  <div class="form-group">
-                     <label for="image">Imagem</label>
-                     <input type="file" name="image" id="image" />
-                  </div>
-                  <div class="form-group">
+                  <div className="form-group">
                      <label for="name">Nome</label>
                      <input id="name" name="name" type="text" onChange={change} placeholder="Seu nome" />
                   </div>
-                  <div class="form-group">
+                  <div className="form-group">
                      <label for="phone">Número</label>
                      <input id="phone" name="phone" type="text" onChange={change} maxLength="10" placeholder="91234-5678" />
                   </div>
-                  <div class="form-group">
+                  <div className="form-group">
                      <label for="email">Email</label>
                      <input id="email" name="email" type="text" onChange={change} placeholder="Seu email" />
                   </div>
