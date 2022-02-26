@@ -40,7 +40,7 @@ const Contact = () => {
 
    return (
       <>
-         <header className="header">
+         <header className="header-contact">
             <nav className="navbar">
                <Link to="/contact">
                   <i className="fas fa-arrow-left fa-lg"></i>
@@ -57,7 +57,7 @@ const Contact = () => {
          </header>
 
          <main>
-            <section className="section">
+            <section className="section-contact">
                <div className="contact-header">
                   <img src="https://random.imagecdn.app/150/150" className="contact-img" alt="Contact" />
                   <h2 className="contact-name">{contact?.name}</h2>

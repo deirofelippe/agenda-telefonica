@@ -1,35 +1,33 @@
 /* HEADER */
 
-header {
+.header-contact {
    background-color: #f79743;
    height: 50px;
    width: 100%;
-   position: sticky;
-   top: 0;
-   z-index: 999;
    display: flex;
    justify-content: center;
  }
  
- .navbar {
-    display: flex;
-    width: 50%;
-    justify-content: space-between;
-    align-items: center;
- }
- 
- .navbar a i{
-    transition: .5s ease;
- }
- .navbar a i:hover{
-    color: gray;
- }
- 
- .navbar h1{
-    color: white;
-    font-weight: 500;
-    font-size: 1.3rem;
- }
+.navbar {
+   display: flex;
+   width: 50%;
+   justify-content: space-between;
+   align-items: center;
+}
+
+.navbar a i{
+   transition: .5s ease;
+}
+
+.navbar a i:hover{
+   color: gray;
+}
+
+.navbar h1{
+   color: white;
+   font-weight: 500;
+   font-size: 1.3rem;
+}
 
 .navbar__btn a:nth-child(1){
    margin-right: 25px;
@@ -37,10 +35,15 @@ header {
 
 /* CARD */
 
-.section {
+.section-contact {
    height: 70vh;
-   padding: 0;
+   width: 50vw;
    min-width: 350px;
+   padding: 0;
+   background-color: #fafafa;
+   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.144);
+   border-left: 1px solid rgba(0, 0, 0, 0.144);
+   font-size: 1rem;
 }
 
 .contact-header{
@@ -91,18 +94,24 @@ header {
    margin-bottom: 10px;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 650px) {
    /* HEADER */
    
-   .navbar{
+   .navbar {
       width: 100%;
+      justify-content: space-around;
    }
 
    /* CARD */
    
-   .section{
-      height: 100vh;
-      width: 100vw;
+   .section-contact{
+      height: calc(100vh - 50px);
+      width: 100%;
+   }
+
+   .contact-body{
+      justify-content: center;
+      height: calc(100% - 250px - 50px);
    }
 
    .contact-email{
