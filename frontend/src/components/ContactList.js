@@ -43,7 +43,7 @@ const ContactList = () => {
          </header>
 
          <main>
-            <section className='section'>
+            <section className='section-list'>
                <ul className="contacts">
                   {contacts.map((contact) => (
                      <ContactItem contact={contact} remove={remove} />
