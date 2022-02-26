@@ -8,7 +8,7 @@ faker.locale = 'pt_BR'
 
 module.exports = {
    up: async (queryInterface) => {
-      const amount = 50;
+      const amount = 100;
 
       const contacts = [];
       let contact = {};
@@ -20,6 +20,8 @@ module.exports = {
             email: faker.internet.email(),
             phone: faker.phone.phoneNumber('#####-####'),
             image: faker.image.imageUrl(),
+            createdAt: new Date(),
+            updatedAt: new Date(),
          };
 
          contacts.push(contact);

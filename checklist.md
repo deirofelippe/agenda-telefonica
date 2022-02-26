@@ -1,10 +1,13 @@
-Faça uma agenda telefônica (em formato de lista);
+# CHECKLIST
 
-Na tela de contato deve conter campos de telefone, nome, email e imagem;
+## Desafios
 
-DEVE ser possível cadastrar, atualizar, visualizar e apagar contatos da agenda;
+- Faça uma agenda telefônica (em formato de lista);
+- Na tela de contato deve conter campos de telefone, nome, email e imagem;
+- DEVE ser possível cadastrar, atualizar, visualizar e apagar contatos da agenda;
+- A aplicação DEVE ser feita em React, back em Node e Banco dados em SQL.
 
-A aplicação DEVE ser feita em React, back em Node e Banco dados em SQL.
+## Checklist
 
 Backend 
    - [x] nodejs 
@@ -16,20 +19,21 @@ Backend
    - [ ] aws 
    - [ ] ci/cd
 Frontend 
-   - [ ] react 
+   - [x] html e css
+   - [x] react 
    - [ ] unform 
-   - [ ] hooks 
+   - [x] hooks 
    - [ ] testes 
-   - [ ] responsivo
+   - [x] responsivo
 Banco 
-   - [ ] MySQL
+   - [x] MySQL
 
-CRUD
+## Tabela
 
 CREATE TABLE Contato (
    id UUID not null primary key,
    telefone VARCHAR(10) not null unique,
    nome VARCHAR(100) not null,
-   email VARCHAR(100) not null,
+   email VARCHAR(100),
    imagem VARCHAR(100)
 )

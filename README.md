@@ -2,7 +2,7 @@
 
 ## Como usar com docker?
 
-1. `sh executar-sistema.sh`
+1. `sh run-app.sh`
 
 **OU**
 
@@ -17,3 +17,12 @@
 **CASO QUEIRA EXECUTAR OS TESTES**
 
 1. `docker-compose exec agenda-backend npm test`
+
+## Configurando aws
+
+serverless config credentials -o --provider aws --key= --secret 
+
+terraform init
+terraform plan
+terraform apply
+terraform destroy

@@ -37,16 +37,27 @@ services:
         MYSQL_ROOT_PASSWORD: root
         MYSQL_DATABASE: agenda
 
-   phpmyadmin:
-      image: phpmyadmin/phpmyadmin:5.1.1
-      container_name: phpmyadmin
-      restart: always
-      ports:
-        - "8081:80"
-      environment:
-        PMA_HOST: mysql
-      depends_on:
-        - mysql
+  #   localstack:
+  #     image: localstack/localstack
+  #     ports:
+  #       - "4566:4566"
+  #     environment:
+  #       - SERVICES=s3,lambda,cloudformation,cloudwatch,sts,iam,dynamodb
+  #       - LAMBDA_EXECUTOR=docker
+  #       - DOCKER_HOST=unix:///var/docker.sock
+  #     volumes:
+  #       - "/var/run/docker.sock:/var/run/docker.sock"
+
+  #  phpmyadmin:
+  #     image: phpmyadmin/phpmyadmin:5.1.1
+  #     container_name: phpmyadmin
+  #     restart: always
+  #     ports:
+  #       - "8081:80"
+  #     environment:
+  #       PMA_HOST: mysql
+  #     depends_on:
+  #       - mysql
 
 volumes:
    v_mysql:

@@ -20,11 +20,11 @@ class Contact extends Model {
             },
             email: {
                type: DataTypes.STRING(100),
-               allowNull: false,
+               allowNull: true,
             },
             image: {
                type: DataTypes.STRING(100),
-               allowNull: false,
+               allowNull: true,
             },
          },
          { sequelize }

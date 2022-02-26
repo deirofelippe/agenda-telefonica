@@ -5,7 +5,12 @@ const cleanOutput = (list) =>
 
 async function findAll() {
    try {
-      const result = await model.findAll();
+      const result = await model.findAll({
+         order: [
+            ['name', 'ASC']
+         ]
+      });
+
       const cleanResult = cleanOutput(result)
 
       return cleanResult
