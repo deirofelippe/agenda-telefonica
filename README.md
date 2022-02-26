@@ -1,5 +1,17 @@
 # Agenda telefônica
 
+- [Screenshots](#screenshots)
+- [Como usar com docker?](#como-usar-com-docker)
+
+## Screenshots
+
+![](./img/1.png)
+![](./img/2.png)
+![](./img/3.png)
+![](./img/4.png)
+![](./img/5.png)
+![](./img/6.png)
+
 ## Como usar com docker?
 
 1. `sh run-app.sh`
@@ -17,12 +29,3 @@
 **CASO QUEIRA EXECUTAR OS TESTES**
 
 1. `docker-compose exec agenda-backend npm test`
-
-## Configurando aws
-
-serverless config credentials -o --provider aws --key= --secret 
-
-terraform init
-terraform plan
-terraform apply
-terraform destroy
