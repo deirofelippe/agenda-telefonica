@@ -1,5 +1,6 @@
 const dao = require("../dao/contact.dao.js");
 const uuid = require("uuid");
+const path = require('path');
 
 async function findAll(req, res) {
    try {
@@ -16,8 +17,17 @@ async function create(req, res) {
       ...req.body
    }
 
+   const image = contact.image
+   const id = uuid.v4();
+   contact.id = id
+
+   if (image) {
+      const ext = path.extname(image)
+      const newFilename = `${id}${ext}`
+      contact.image = newFilename
+   }
+
    try {
-      contact.id = uuid.v4();
       const createdContact = await dao.create(contact);
 
       res.status(201).json({ contact: createdContact });
