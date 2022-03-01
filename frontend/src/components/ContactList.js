@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import './ContactList.css';
 import ContactItem from './ContactItem.js';
-import mockContacts from '../mockPhoneBook';
 import { Link } from 'react-router-dom';
 import { usePhoneBook } from '../hooks/usePhoneBook';
+import { s3DeleteFile } from '../s3';
+import defaultImage from './default_avatar.svg'
 
 const ContactList = () => {
-   const { removeContact, phoneBook } = usePhoneBook()
+   const { removeContactInContext, phoneBook } = usePhoneBook()
 
    const [contacts, setContacts] = useState([]);
 
@@ -14,20 +15,37 @@ const ContactList = () => {
       setContacts([...phoneBook])
    }, [phoneBook]);
 
-   const remove = async (id) => {
+   const remove = async (id, image) => {
       if (!window.confirm("Tem certeza que deseja deletar?")) {
          return;
       }
 
-      const url = process.env.REACT_APP_BACKEND_URL;
-      const res = await fetch(`${url}/contact/${id}`, { method: "DELETE" });
+      const res = await sendRequest(id)
 
       if (!res.ok) {
          return
       }
 
-      removeContact(id)
+      if (image) await s3DeleteFile(image)
+
+      removeContactInContext(id)
    };
+
+   const sendRequest = async id => {
+      const url = process.env.REACT_APP_BACKEND_URL;
+      const res = await fetch(`${url}/contact/${id}`, { method: "DELETE" });
+      return res
+   }
+
+   const getImageURL = ({ image = undefined }) => {
+      if (image) {
+         const bucket = process.env.REACT_APP_AWS_BUCKET_NAME
+         const region = process.env.REACT_APP_AWS_REGION
+         return `https://${bucket}.s3.${region}.amazonaws.com/${image}`
+      }
+
+      return defaultImage
+   }
 
    return (
       <>
@@ -46,7 +64,7 @@ const ContactList = () => {
             <section className='section-list'>
                <ul className="contacts">
                   {contacts.map((contact) => (
-                     <ContactItem contact={contact} remove={remove} />
+                     <ContactItem contact={contact} remove={remove} getImageURL={getImageURL} />
                   ))}
                </ul>
             </section>
@@ -55,4 +73,4 @@ const ContactList = () => {
    );
 };
 
-export default ContactList;
+export default memo(ContactList);
