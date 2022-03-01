@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import './ContactFormEdit.css'
+import './ContactForm.css'
 import { Link, useHistory } from 'react-router-dom';
 import { usePhoneBook } from '../hooks/usePhoneBook';
+import { s3PutFile } from '../s3.js';
+import defaultImage from './default_avatar.svg'
 
 const ContactForm = () => {
-   const { createContact } = usePhoneBook()
+   const { createContactInContext } = usePhoneBook()
 
    const history = useHistory()
 
@@ -12,7 +14,10 @@ const ContactForm = () => {
       name: '',
       email: '',
       phone: '',
+      image: {}
    });
+
+   const [imagePreview, setImagePreview] = useState(defaultImage);
 
    const change = ({ target: { name, value } }) => {
       setContact({
@@ -21,18 +26,8 @@ const ContactForm = () => {
       });
    };
 
-   const create = async (event) => {
-      event.preventDefault();
-
-      const url = process.env.REACT_APP_BACKEND_URL;
-
-      const res = await fetch(`${url}/contact`, {
-         method: "POST",
-         headers: {
-            "Content-Type": "application/json",
-         },
-         body: JSON.stringify({ ...contact }),
-      });
+   const create = async () => {
+      const res = await sendRequest()
 
       if (!res.ok) {
          return;
@@ -40,10 +35,53 @@ const ContactForm = () => {
 
       const { contact: createdContact } = await res.json();
 
-      createContact(createdContact)
+      await fileUpload(createdContact)
+
+      createContactInContext(createdContact)
+   };
+
+   const sendRequest = async () => {
+      const url = process.env.REACT_APP_BACKEND_URL;
+
+      const res = await fetch(`${url}/contact`, {
+         method: "POST",
+         headers: {
+            "Content-Type": "application/json",
+         },
+         body: JSON.stringify({
+            ...contact,
+            image: contact.image.name
+         }),
+      });
+
+      return res
+   }
+
+   const fileUpload = async createdContact => {
+      const { image: filename } = createdContact
+
+      if (!filename) {
+         history.push('/contact')
+         return;
+      }
+
+      await s3PutFile(contact.image, filename)
 
       history.push('/contact')
-   };
+   }
+
+   const changeFile = (event) => {
+      const file = event.target.files[0]
+
+      const preview = file ? URL.createObjectURL(file) : defaultImage
+
+      setContact({
+         ...contact,
+         image: file || {}
+      })
+
+      setImagePreview(preview)
+   }
 
    return (
       <>
@@ -61,16 +99,23 @@ const ContactForm = () => {
          <main>
             <section className='section'>
                <form action="#">
+                  <div className="form-group image-preview">
+                     <img src={imagePreview} alt="Contact" />
+                  </div>
                   <div className="form-group">
-                     <label for="name">Nome</label>
+                     <label htmlFor="image">Imagem</label>
+                     <input type="file" name="image" id="image" onChange={changeFile} />
+                  </div>
+                  <div className="form-group">
+                     <label htmlFor="name">Nome</label>
                      <input id="name" name="name" type="text" onChange={change} placeholder="Seu nome" />
                   </div>
                   <div className="form-group">
-                     <label for="phone">Número</label>
+                     <label htmlFor="phone">Número</label>
                      <input id="phone" name="phone" type="text" onChange={change} maxLength="10" placeholder="91234-5678" />
                   </div>
                   <div className="form-group">
-                     <label for="email">Email</label>
+                     <label htmlFor="email">Email</label>
                      <input id="email" name="email" type="text" onChange={change} placeholder="Seu email" />
                   </div>
                </form>
