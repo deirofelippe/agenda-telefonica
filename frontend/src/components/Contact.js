@@ -3,25 +3,30 @@ import { Link } from 'react-router-dom';
 import './Contact.css'
 import { useParams } from "react-router-dom";
 import { usePhoneBook } from '../hooks/usePhoneBook';
+import defaultImage from './default_avatar.svg'
+import { useHistory } from 'react-router-dom';
 
 const Contact = () => {
    const { id } = useParams()
 
-   const { removeContact, findContact } = usePhoneBook()
+   const history = useHistory()
+
+   const { removeContactInContext, findContactInContext } = usePhoneBook()
 
    const [contact, setContact] = useState({
       name: '',
       email: '',
       phone: '',
+      image: '',
    });
 
    useEffect(() => {
-      const contactFound = findContact(id)
+      const contactFound = findContactInContext(id)
       setContact({
          ...contact,
          ...contactFound
       })
-   }, [findContact, id]);
+   }, [findContactInContext, id]);
 
    const remove = async (id) => {
       if (!window.confirm("Tem certeza que deseja deletar?")) {
@@ -35,8 +40,20 @@ const Contact = () => {
          return
       }
 
-      removeContact(id)
+      removeContactInContext(id)
+
+      history.push('/')
    };
+
+   const getImageURL = ({ image = undefined }) => {
+      if (image) {
+         const bucket = process.env.REACT_APP_AWS_BUCKET_NAME
+         const region = process.env.REACT_APP_AWS_REGION
+         return `https://${bucket}.s3.${region}.amazonaws.com/${image}`
+      }
+
+      return defaultImage
+   }
 
    return (
       <>
@@ -59,7 +76,7 @@ const Contact = () => {
          <main>
             <section className="section-contact">
                <div className="contact-header">
-                  <img src="https://random.imagecdn.app/150/150" className="contact-img" alt="Contact" />
+                  <img src={getImageURL(contact)} className="contact-img" alt="Contact" />
                   <h2 className="contact-name">{contact?.name}</h2>
                </div>
                <div className="contact-body">
