@@ -12,9 +12,7 @@
       "uuid": "^8.3.2"
    },
    "devDependencies": {
-      "@aws-sdk/client-s3": "^3.53.1",
       "@faker-js/faker": "^6.0.0-alpha.7",
-      "aws-sdk": "^2.1082.0",
       "cross-env": "^7.0.3",
       "express-generator": "^4.16.1",
       "jest": "^27.4.5",
