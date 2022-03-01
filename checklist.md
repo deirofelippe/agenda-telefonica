@@ -15,8 +15,9 @@ Backend
    - [x] sequelize 
    - [ ] yup 
    - [x] testes 
-   - [ ] upload da imagem
-   - [ ] aws 
+   - [x] upload da imagem
+   - [x] aws 
+   - [x] localstack
    - [ ] ci/cd
 Frontend 
    - [x] html e css

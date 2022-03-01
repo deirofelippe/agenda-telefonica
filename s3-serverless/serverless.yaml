@@ -1,0 +1,62 @@
+service: agenda-s3
+
+frameworkVersion: "2"
+
+variablesResolutionMode: 20210219
+
+# plugins:
+#   - serverless-localstack
+
+# custom:
+#   localstack:
+#     stages:
+#       - local
+#     autostart: false
+#     debug: true
+#     endpoints:
+#       S3: http://localhost:4566
+#       CloudFormation: http://localhost:4566
+#       Lambda: http://localhost:4566
+#       IAM: http://localhost:4566
+#       STS: http://localhost:4566
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+  stage: dev
+  region: sa-east-1
+  environment:
+    BUCKET_NAME: agenda-telefonica-s3
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Sid: PublicReadForGetBucketObjects
+          Action:
+            - s3:*
+          Resource:
+            - "arn:aws:s3:::${self:provider.environment.BUCKET_NAME}/*"
+            - "arn:aws:s3:::${self:provider.environment.BUCKET_NAME}"
+
+resources:
+  Resources:
+    agendaTelefonicaS3:
+      Type: "AWS::S3::Bucket"
+      Properties:
+        BucketName: ${self:provider.environment.BUCKET_NAME}
+        AccessControl: PublicRead
+        CorsConfiguration:
+          CorsRules:
+            - AllowedHeaders:
+                - "*"
+              AllowedMethods:
+                - HEAD
+                - GET
+                - PUT
+                - POST
+                - DELETE
+              AllowedOrigins:
+                - "*"
+              ExposedHeaders:
+                - ETag

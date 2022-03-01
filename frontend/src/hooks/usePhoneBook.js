@@ -15,39 +15,49 @@ export default function PhoneBookProvider({ children }) {
          }
 
          const { contacts } = await findAll()
+
          setPhoneBook([...contacts])
+         // setPhoneBook([...mockPhoneBook])
       })()
    }, []);
 
-   function editContact(editedContact) {
+   function editContactInContext(contactToEditState) {
+      const editedContact = {
+         ...contactToEditState
+      }
+
       const newPhoneBook = phoneBook.filter(contact => contact.id !== editedContact.id)
+
       setPhoneBook([
          editedContact,
          ...newPhoneBook,
       ])
    }
 
-   function createContact(contact) {
+   function createContactInContext(contact) {
+      delete contact.createdAt
+      delete contact.updatedAt
+
       setPhoneBook([
          contact,
          ...phoneBook
       ])
    }
 
-   function removeContact(id) {
+   function removeContactInContext(id) {
       const newPhoneBook = phoneBook.filter(contact => contact.id !== id)
       setPhoneBook([...newPhoneBook])
    }
 
-   function findContact(id) {
+   function findContactInContext(id) {
       return phoneBook.find(contact => contact.id === id)
    }
 
    return <PhoneBookContext.Provider value={{
-      editContact,
-      removeContact,
-      findContact,
-      createContact,
+      editContactInContext,
+      removeContactInContext,
+      findContactInContext,
+      createContactInContext,
       phoneBook,
       setPhoneBook
    }} >{children}</PhoneBookContext.Provider>
@@ -55,6 +65,21 @@ export default function PhoneBookProvider({ children }) {
 
 export function usePhoneBook() {
    const context = useContext(PhoneBookContext)
-   const { editContact, createContact, removeContact, findContact, phoneBook, setPhoneBook } = context
-   return { editContact, createContact, removeContact, findContact, phoneBook, setPhoneBook }
+   const {
+      editContactInContext,
+      createContactInContext,
+      removeContactInContext,
+      findContactInContext,
+      phoneBook,
+      setPhoneBook
+   } = context
+
+   return {
+      editContactInContext,
+      createContactInContext,
+      removeContactInContext,
+      findContactInContext,
+      phoneBook,
+      setPhoneBook
+   }
 }
