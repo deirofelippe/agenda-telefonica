@@ -126,10 +126,13 @@ const ContactEdit = () => {
          await fileUpload(signedUrl, updatedContact)
       }
 
+      const timestamp = Date.now()
+      const removeCacheImage = `?${timestamp}`
+
       const contactToEditInContext: ContactProps = {
          ...contactToEdit,
          ...updatedContact,
-         imageName: updatedContact.image,
+         imageName: updatedContact.image + removeCacheImage,
       }
 
       editContact(contactToEditInContext)

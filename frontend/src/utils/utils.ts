@@ -6,7 +6,6 @@ export const getImageURL = (imageName: string) => {
       return defaultImage
    }
 
-   const timestamp = Date.now()
-   const url = `${env.s3Url}/${imageName}?${timestamp}`
+   const url = `${env.s3Url}/${imageName}`
    return url
 }
