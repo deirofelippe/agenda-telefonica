@@ -1,5 +1,5 @@
-import dao from "../dao/contact.dao.js";
-import uuid from "uuid";
+import * as dao from "../dao/contact.dao.js";
+import * as uuid from "uuid";
 import path from "path";
 import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
 

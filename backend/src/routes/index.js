@@ -1,7 +1,7 @@
 import express from "express";
 
-import imagesController from "../controller/images.controller.js";
-import contactsController from "../controller/contacts.controller.js";
+import * as imagesController from "../controller/images.controller.js";
+import * as contactsController from "../controller/contacts.controller.js";
 
 const router = express.Router();
 

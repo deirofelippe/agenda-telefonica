@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize";
-import dbConfig from "../config/database.js";
+import { config as dbConfig } from "../config/database.js";
 import Contact from "../models/contact.js";
 
 const connection = new Sequelize(dbConfig);
