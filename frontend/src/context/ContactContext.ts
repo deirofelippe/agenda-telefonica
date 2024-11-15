@@ -1,5 +1,5 @@
 import { createContext } from "react"
-import { ContactProps } from "../App"
+import { ContactProps } from "types/index"
 
 export type ContactContextType = {
    createContact: (contact: ContactProps) => void

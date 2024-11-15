@@ -1,4 +1,4 @@
-import { ContactProps } from "../App.tsx"
+import { ContactProps } from "types/index"
 
 type ActionCreate = {
    type: "CREATE"

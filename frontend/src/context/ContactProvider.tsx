@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from "react"
-import { ContactApi, ContactProps } from "../App"
+import { ContactApi, ContactProps } from "types/index"
 import appReduce from "./AppReduce"
 import { env } from "../env"
 import ContactContext from "./ContactContext"

@@ -1,9 +1,9 @@
 import { memo } from "react"
 import "./ContactList.css"
 import { Link } from "react-router-dom"
-import { useContacts } from "../hooks/useContacts.ts"
-import { env } from "../env.ts"
-import ContactItem from "../components/ContactItem.tsx"
+import { useContacts } from "hooks/useContacts.ts"
+import { env } from "env.ts"
+import ContactItem from "./ContactItem/index"
 
 const ContactList = () => {
    const { contacts, removeContact } = useContacts()

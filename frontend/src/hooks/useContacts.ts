@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import ContactContext, { ContactContextType } from "../context/ContactContext"
+import ContactContext, { ContactContextType } from "context/ContactContext"
 
 export function useContacts(): Required<ContactContextType> {
    const { contacts, createContact, editContact, removeContact, findContact } =

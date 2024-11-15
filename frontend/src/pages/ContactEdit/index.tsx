@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react"
 import { Link, useParams, useNavigate } from "react-router-dom"
 import "./ContactEdit.css"
 import defaultImage from "../assets/default_avatar.svg"
-import { ContactApi, ContactProps } from "../App"
-import { env } from "../env"
-import { useContacts } from "../hooks/useContacts"
-import { getImageURL } from "../utils/utils"
+import { ContactApi, ContactProps } from "types/index"
+import { env } from "env.ts"
+import { useContacts } from "hooks/useContacts"
+import { getImageURL } from "utils/index"
 
 const ContactEdit = () => {
    const { id } = useParams()

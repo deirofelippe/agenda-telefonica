@@ -1,5 +1,5 @@
-import defaultImage from "../assets/default_avatar.svg"
-import { env } from "../env"
+import defaultImage from "assets/default_avatar.svg"
+import { env } from "env.ts"
 
 export const getImageURL = (imageName: string) => {
    if (!imageName) {
