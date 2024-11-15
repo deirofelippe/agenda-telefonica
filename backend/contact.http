@@ -1,5 +1,7 @@
-POST http://localhost:3000/contact HTTP/1.1
-content-type: application/json
+@host = http://agenda-backend:3000
+
+POST {{host}}/contacts HTTP/1.1
+Content-Type: application/json
 
 {
     "name": "eu",
@@ -9,14 +11,22 @@ content-type: application/json
 }
 
 ###
-GET http://localhost:3000/contact HTTP/1.1
+POST {{host}}/presigned-url HTTP/1.1
+Content-Type: application/json
+
+{
+    "imageName": "dre.png"
+}
 
 ###
-GET http://localhost:3000/contact/b4a24da6-33b3-47fe-9c44-c8b2b2c43ef4 HTTP/1.1
+GET {{host}}/contacts HTTP/1.1
 
 ###
-PUT http://localhost:3000/contact/b4a24da6-33b3-47fe-9c44-c8b2b2c43ef4 HTTP/1.1
-content-type: application/json
+GET {{host}}/contacts/b4a24da6-33b3-47fe-9c44-c8b2b2c43ef4 HTTP/1.1
+
+###
+PUT {{host}}/contacts/b4a24da6-33b3-47fe-9c44-c8b2b2c43ef4 HTTP/1.1
+Content-Type: application/json
 
 {
     "name": "euu",
@@ -24,4 +34,5 @@ content-type: application/json
 }
 
 ###
-DELETE http://localhost:3000/contact/0e430ce1-ab22-4b2f-b150-2b42b5797019 HTTP/1.1
+DELETE {{host}}/contacts/0e430ce1-ab22-4b2f-b150-2b42b5797019 HTTP/1.1
+
