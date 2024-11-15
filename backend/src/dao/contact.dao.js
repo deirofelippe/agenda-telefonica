@@ -1,7 +1,12 @@
 import model from "../models/contact.js";
+import "../types/index.js";
 
+/** @returns {Promise<Contact[]>} */
 const cleanOutput = (list) => list.map((item) => item?.dataValues);
 
+/**
+ * @returns {Promise<Contact[]>}
+ * */
 async function findAll() {
   try {
     const result = await model.findAll({
@@ -18,6 +23,10 @@ async function findAll() {
   }
 }
 
+/**
+ * @param {Contact} contact
+ * @returns {Promise<Contact>}
+ * */
 async function create(contact) {
   try {
     const result = await model.create(contact);
@@ -30,6 +39,10 @@ async function create(contact) {
   }
 }
 
+/**
+ * @param {string} id
+ * @returns {Promise<Contact>}
+ * */
 async function findById(id) {
   try {
     const result = await model.findOne({ where: { id } });
@@ -42,6 +55,10 @@ async function findById(id) {
   }
 }
 
+/**
+ * @param {Contact} contact
+ * @returns {Promise<void>}
+ * */
 async function update(newContact) {
   try {
     const { id } = newContact;
@@ -53,6 +70,10 @@ async function update(newContact) {
   }
 }
 
+/**
+ * @param {string} id
+ * @returns {Promise<void>}
+ * */
 async function remove(id) {
   try {
     await model.destroy({ where: { id } });
