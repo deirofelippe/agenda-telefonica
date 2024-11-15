@@ -32,7 +32,7 @@
     "dev": "node --env-file=./.env src/server.js --watch-path=./src",
     "pre": "cross-env NODE_ENV=test npx sequelize db:migrate",
     "post": "cross-env NODE_ENV=test npx sequelize db:migrate:undo:all",
-    "test": "cross-env NODE_ENV=test npx jest --config jest.config.js --runInBand --detectOpenHandles",
+    "test": "cross-env NODE_ENV=test node --experimental-vm-modules ./node_modules/jest/bin/jest.js --config jest.config.js --runInBand --detectOpenHandles",
     "test:watch": "npm run test -- --watch",
     "test:cov": "npm run test -- --coverage --no-cache"
   },
