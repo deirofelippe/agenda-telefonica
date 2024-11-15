@@ -1,9 +1,5 @@
-/*
- * For a detailed explanation regarding each configuration property, visit:
- * https://jestjs.io/docs/configuration
- */
-
-module.exports = {
+/** @type {import('jest').Config} */
+const jestConfig = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -62,6 +58,7 @@ module.exports = {
       lines: 85,
     },
   },
+  transform: {},
 
   // A path to a custom dependency extractor
   // dependencyExtractor: undefined,
@@ -193,3 +190,5 @@ module.exports = {
   // Whether to use watchman for file crawling
   // watchman: true,
 };
+
+export default jestConfig;
