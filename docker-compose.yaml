@@ -1,6 +1,18 @@
-version: '3.2'
+networks:
+  default:
+    name: agenda
+    driver: bridge
 
 services:
+  develop-agenda:
+    image: deirofelippe/develop-agenda:latest
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: develop-agenda
+    volumes:
+      - "./:/home/node/app"
+
   agenda-backend:
     build:
       context: ./backend
@@ -20,8 +32,6 @@ services:
     container_name: agenda-frontend
     volumes:
       - "./frontend:/app"
-    env_file:
-      - ./frontend/.env
     ports:
       - "3001:3000"
     depends_on:
@@ -33,23 +43,19 @@ services:
     restart: always
     ports:
       - "6033:3306"
-    volumes:
-      - "v_mysql:/var/lib/mysql"
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: agenda
 
   localstack:
-    image: localstack/localstack
+    image: localstack/localstack:3.1.0
     container_name: localstack
     ports:
       - "4566:4566"
+      - "4510-4559:4510-4559"
     environment:
-      - SERVICES=s3,lambda,cloudformation,cloudwatch,sts,iam,dynamodb
-      - LAMBDA_EXECUTOR=docker
-      - DOCKER_HOST=unix:///var/docker.sock
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
+      - DEBUG=0
+      - AWS_DEFAULT_REGION=sa-east-1
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:5.1.1
@@ -61,7 +67,3 @@ services:
       PMA_HOST: mysql
     depends_on:
       - mysql
-
-volumes:
-  v_mysql:
-    external: true
