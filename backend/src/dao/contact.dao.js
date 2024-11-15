@@ -84,4 +84,4 @@ async function remove(id) {
   }
 }
 
-export { remove, update, findById, findAll, create };
+export const dao = { remove, update, findById, findAll, create };
