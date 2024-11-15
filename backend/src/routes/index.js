@@ -1,12 +1,16 @@
 const express = require("express");
-const contactController = require("../controller/contact.controller.js");
+
+const imagesController = require("../controller/images.controller.js");
+const contactsController = require("../controller/contacts.controller.js");
 
 const router = express.Router();
 
-router.post("/contact", contactController.create);
-router.get("/contact", contactController.findAll);
-router.get("/contact/:id", contactController.findById);
-router.put("/contact/:id", contactController.update);
-router.delete("/contact/:id", contactController.remove);
+router.post("/images/presigned-url", imagesController.preSignedUrl);
+
+router.post("/contacts", contactsController.create);
+router.get("/contacts", contactsController.findAll);
+router.get("/contacts/:id", contactsController.findById);
+router.put("/contacts/:id", contactsController.update);
+router.delete("/contacts/:id", contactsController.remove);
 
 module.exports = router;
