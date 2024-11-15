@@ -1,5 +1,5 @@
-const app = require("./app");
-const db = require("./database");
+import app from "./app.js";
+import db from "./database/index.js";
 
 const PORT = process.env.API_PORT || 3000;
 

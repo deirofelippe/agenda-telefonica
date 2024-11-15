@@ -1,7 +1,7 @@
-const express = require("express");
+import express from "express";
 
-const imagesController = require("../controller/images.controller.js");
-const contactsController = require("../controller/contacts.controller.js");
+import imagesController from "../controller/images.controller.js";
+import contactsController from "../controller/contacts.controller.js";
 
 const router = express.Router();
 
@@ -13,4 +13,4 @@ router.get("/contacts/:id", contactsController.findById);
 router.put("/contacts/:id", contactsController.update);
 router.delete("/contacts/:id", contactsController.remove);
 
-module.exports = router;
+export default router;

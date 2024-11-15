@@ -1,4 +1,4 @@
-const model = require("../models/contact.js");
+import model from "../models/contact.js";
 
 const cleanOutput = (list) => list.map((item) => item?.dataValues);
 
@@ -63,10 +63,4 @@ async function remove(id) {
   }
 }
 
-module.exports = {
-  remove,
-  update,
-  findById,
-  findAll,
-  create,
-};
+export { remove, update, findById, findAll, create };

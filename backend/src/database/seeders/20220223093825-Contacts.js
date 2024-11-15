@@ -1,37 +1,36 @@
 "use strict";
 
-require("dotenv").config();
-const { faker } = require("@faker-js/faker");
-const uuid = require("uuid");
+import { faker } from "@faker-js/faker";
+import uuid from "uuid";
 
-faker.locale = 'pt_BR'
+faker.locale = "pt_BR";
 
-module.exports = {
-   up: async (queryInterface) => {
-      const amount = 30;
+async function up(queryInterface) {
+  const amount = 30;
 
-      const contacts = [];
-      let contact = {};
+  const contacts = [];
+  let contact = {};
 
-      for (let index = 1; index <= amount; index++) {
-         contact = {
-            id: uuid.v4(),
-            name: faker.name.findName(),
-            email: faker.internet.email(),
-            phone: faker.phone.phoneNumber('#####-####'),
-            image: faker.image.imageUrl(),
-            createdAt: new Date(),
-            updatedAt: new Date(),
-         };
+  for (let index = 1; index <= amount; index++) {
+    contact = {
+      id: uuid.v4(),
+      name: faker.name.findName(),
+      email: faker.internet.email(),
+      phone: faker.phone.phoneNumber("#####-####"),
+      image: faker.image.imageUrl(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
 
-         contacts.push(contact);
-      }
-      console.log(JSON.stringify(contacts));
+    contacts.push(contact);
+  }
+  console.log(JSON.stringify(contacts));
 
-      await queryInterface.bulkInsert("Contacts", contacts, {});
-   },
+  await queryInterface.bulkInsert("Contacts", contacts, {});
+}
 
-   down: async (queryInterface) => {
-      await queryInterface.bulkDelete("Contacts", null, {});
-   },
-};
+async function down(queryInterface) {
+  await queryInterface.bulkDelete("Contacts", null, {});
+}
+
+export { up, down };
