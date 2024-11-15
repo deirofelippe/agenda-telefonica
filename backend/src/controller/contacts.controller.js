@@ -1,7 +1,9 @@
-const dao = require("../dao/contact.dao.js");
-const uuid = require("uuid");
-const path = require("path");
-const { S3Client, DeleteObjectCommand } = require("@aws-sdk/client-s3");
+import dao from "../dao/contact.dao.js";
+import uuid from "uuid";
+import path from "path";
+import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
+
+import "../types/index.js";
 
 function getS3Client() {
   const clientParams = {
@@ -19,6 +21,11 @@ function getS3Client() {
   return client;
 }
 
+/**
+ * @param {RequestExpress} req
+ * @param {ResponseExpress} res
+ * @returns {ResponseExpress}
+ */
 async function findAll(req, res) {
   try {
     const contacts = await dao.findAll();
@@ -29,7 +36,13 @@ async function findAll(req, res) {
   }
 }
 
+/**
+ * @param {RequestExpress} req
+ * @param {ResponseExpress} res
+ * @returns {ResponseExpress}
+ */
 async function create(req, res) {
+  /** @type {Contact} */
   const contact = {
     ...req.body,
   };
@@ -53,6 +66,11 @@ async function create(req, res) {
   }
 }
 
+/**
+ * @param {Contact} oldContact
+ * @param {Contact} newContact
+ * @returns {Contact}
+ */
 function buildUpdatedContact(oldContact, newContact) {
   const updatedContact = {
     id: oldContact.id,
@@ -73,6 +91,10 @@ function buildUpdatedContact(oldContact, newContact) {
   return updatedContact;
 }
 
+/**
+ * @param {Contact} oldContact
+ * @param {Contact} newContact
+ */
 async function removeImageFromS3(oldContact, newContact) {
   const imagesIsEqual = newContact.image === oldContact.image;
   if (imagesIsEqual) {
@@ -88,6 +110,7 @@ async function removeImageFromS3(oldContact, newContact) {
 
   const client = getS3Client();
 
+  /** @type {DeleteObjectCommandInput} */
   const putObjectParams = {
     Bucket: "agenda-images",
     Key: oldContact.image,
@@ -98,10 +121,16 @@ async function removeImageFromS3(oldContact, newContact) {
   await client.send(command);
 }
 
+/**
+ * @param {RequestExpress} req
+ * @param {ResponseExpress} res
+ * @returns {ResponseExpress}
+ */
 async function update(req, res) {
   try {
+    /** @type {Contact} */
     const contact = req.body;
-    const contactId = req.body.id;
+    const contactId = contact.id;
 
     const contactFound = await dao.findById(contactId);
 
@@ -129,8 +158,14 @@ async function update(req, res) {
   }
 }
 
+/**
+ * @param {RequestExpress} req
+ * @param {ResponseExpress} res
+ * @returns {ResponseExpress}
+ */
 async function remove(req, res) {
   try {
+    /** @type {string} */
     const contactId = req.params.id;
 
     const contact = await dao.findById(contactId);
@@ -144,6 +179,7 @@ async function remove(req, res) {
 
     const client = getS3Client();
 
+    /** @type {DeleteObjectCommandInput} */
     const deleteObjectParams = {
       Bucket: "agenda-images",
       Key: imageName,
@@ -161,6 +197,11 @@ async function remove(req, res) {
   }
 }
 
+/**
+ * @param {RequestExpress} req
+ * @param {ResponseExpress} res
+ * @returns {ResponseExpress}
+ */
 async function findById(req, res) {
   try {
     const contact = await dao.findById(req.params.id);
@@ -171,10 +212,4 @@ async function findById(req, res) {
   }
 }
 
-module.exports = {
-  findAll,
-  create,
-  update,
-  remove,
-  findById,
-};
+export { findAll, create, update, remove, findById };
