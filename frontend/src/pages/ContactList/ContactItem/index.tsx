@@ -1,6 +1,6 @@
 import { ContactProps } from "~types/index"
 import { getImageURL } from "~utils/index"
-import "./ContactItem.css"
+import "./styles.css"
 import { Link } from "react-router-dom"
 
 interface ContactItemProps {

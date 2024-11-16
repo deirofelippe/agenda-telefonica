@@ -1,5 +1,5 @@
 import { memo } from "react"
-import "./ContactList.css"
+import "./styles.css"
 import { Link } from "react-router-dom"
 import { useContacts } from "~hooks/useContacts"
 import { env } from "~env"
