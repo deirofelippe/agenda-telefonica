@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import "./Contact.css"
-import { useContacts } from "hooks/useContacts"
-import { ContactProps } from "types/index"
-import { env } from "env.ts"
-import { getImageURL } from "utils/index"
+import { useContacts } from "~hooks/useContacts"
+import { ContactProps } from "~types/index"
+import { env } from "~env"
+import { getImageURL } from "~utils/index"
 
 const Contact = () => {
    const params = useParams()

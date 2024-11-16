@@ -1,4 +1,4 @@
-import { ContactProps } from "types/index"
+import { ContactProps } from "~types/index"
 
 type ActionCreate = {
    type: "CREATE"

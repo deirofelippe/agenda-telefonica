@@ -1,5 +1,5 @@
 import { RouterProvider } from "react-router-dom"
-import ContactProvider from "context/ContactProvider.tsx"
+import ContactProvider from "~context/ContactProvider"
 import router from "./routes"
 import "./App.css"
 

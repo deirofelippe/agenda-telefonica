@@ -2,9 +2,9 @@ import React, { useState } from "react"
 import "./ContactForm.css"
 import { Link, useNavigate } from "react-router-dom"
 import defaultImage from "../assets/default_avatar.svg"
-import { ContactApi, ContactProps } from "types/index"
-import { env } from "env.ts"
-import { useContacts } from "hooks/useContacts.js"
+import { ContactApi, ContactProps } from "~types/index"
+import { env } from "~env"
+import { useContacts } from "~hooks/useContacts"
 
 const ContactForm = () => {
    const { createContact } = useContacts()

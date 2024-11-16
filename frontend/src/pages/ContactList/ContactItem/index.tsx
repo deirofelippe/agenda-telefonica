@@ -1,5 +1,5 @@
-import { ContactProps } from "types/index"
-import { getImageURL } from "utils/index"
+import { ContactProps } from "~types/index"
+import { getImageURL } from "~utils/index"
 import "./ContactItem.css"
 import { Link } from "react-router-dom"
 

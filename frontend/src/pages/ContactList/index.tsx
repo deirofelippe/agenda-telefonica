@@ -1,8 +1,8 @@
 import { memo } from "react"
 import "./ContactList.css"
 import { Link } from "react-router-dom"
-import { useContacts } from "hooks/useContacts.ts"
-import { env } from "env.ts"
+import { useContacts } from "~hooks/useContacts"
+import { env } from "~env"
 import ContactItem from "./ContactItem/index"
 
 const ContactList = () => {

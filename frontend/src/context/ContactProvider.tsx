@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from "react"
-import { ContactApi, ContactProps } from "types/index"
+import { ContactApi, ContactProps } from "~types/index"
 import appReduce from "./AppReduce"
-import { env } from "../env"
+import { env } from "~env"
 import ContactContext from "./ContactContext"
 
 const initialState: { contacts: ContactProps[] } = {

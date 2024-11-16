@@ -1,7 +1,7 @@
-import ContactList from "pages/ContactList"
-import ContactEdit from "pages/ContactEdit"
-import ContactForm from "pages/ContactForm"
-import Contact from "pages/Contact"
+import ContactList from "~pages/ContactList/index"
+import ContactEdit from "~pages/ContactEdit/index"
+import ContactForm from "~pages/ContactForm/index"
+import Contact from "~pages/Contact/index"
 import { createBrowserRouter } from "react-router-dom"
 
 const router = createBrowserRouter(
