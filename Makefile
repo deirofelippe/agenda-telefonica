@@ -1,3 +1,12 @@
+ci-cd:
+	@gh extension exec act --secret-file .env.act-secrets -C ./ -j ci
+
+open-coverage:
+	@firefox --new-window ./backend/coverage/lcov-report/index.html
+
+open-build-frontend:
+	@firefox --new-window ./frontend/dist/index.html
+
 up: 
 	@docker compose up -d --build
 
@@ -16,6 +25,9 @@ backend-exec-root:
 frontend-start:
 	@docker container exec -it -u node agenda-frontend ash -c "npm run dev"
 
+frontend-express:
+	@docker container exec -it -u node agenda-frontend ash -c "npm run dev:express"
+
 frontend-exec:
 	@docker container exec -it -u node agenda-frontend ash 
 
@@ -27,6 +39,3 @@ terraform-apply:
 
 terraform-destroy:
 	@terraform -chdir=./terraform destroy -auto-approve
-
-firefox-open:
-	@firefox --new-window ./frontend/dist/index.html
