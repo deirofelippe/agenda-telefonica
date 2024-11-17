@@ -2,9 +2,10 @@ import React, { useState } from "react"
 import "./styles.css"
 import { Link, useNavigate } from "react-router-dom"
 import defaultImage from "~assets/default_avatar.svg"
-import { ContactApi, ContactProps } from "~types/index"
-import { env } from "~env"
+import { ContactProps } from "~types/index"
 import { useContacts } from "~hooks/useContacts"
+import { createContactsRequest } from "~src/services/contacts"
+import { generatePresignedUrl, uploadFile } from "~src/services/images"
 
 const ContactForm = () => {
    const { createContact } = useContacts()
@@ -31,18 +32,23 @@ const ContactForm = () => {
    }
 
    const create = async () => {
-      const { createdContact, responseIsOk } = await sendRequest()
+      const { createdContact, responseIsOk } =
+         await createContactsRequest(contact)
 
       if (!responseIsOk) {
          return
       }
 
       if (contact?.imageName) {
-         const signedUrl = await generatePreSignedUrl(
+         const { signedUrl } = await generatePresignedUrl(
             createdContact.image as string
          )
 
-         await fileUpload(signedUrl, createdContact)
+         await uploadFile({
+            signedUrl,
+            imageContent: contact.imageContent!,
+            imageName: createdContact.image!,
+         })
       }
 
       const contactToCreateInContext: ContactProps = {
@@ -53,92 +59,6 @@ const ContactForm = () => {
       createContact(contactToCreateInContext)
 
       navigate("/")
-   }
-   const sendRequest = async (): Promise<{
-      responseIsOk: boolean
-      createdContact: ContactApi
-   }> => {
-      const url = env.backendUrl
-
-      const body: ContactApi = {
-         ...contact,
-         image: contact?.imageName ?? "",
-      }
-
-      const response = await fetch(`${url}/contacts`, {
-         method: "POST",
-         headers: {
-            "Content-Type": "application/json",
-         },
-         body: JSON.stringify(body),
-      })
-
-      const { contact: createdContact } = await response.json()
-
-      createdContact.imageName = createdContact.image
-
-      return {
-         createdContact,
-         responseIsOk: response.ok,
-      }
-   }
-
-   const generatePreSignedUrl = async (imageName: string): Promise<string> => {
-      const url = env.backendUrl
-
-      const body = {
-         imageName: imageName,
-      }
-
-      const response = await fetch(`${url}/images/presigned-url`, {
-         method: "POST",
-         headers: {
-            "Content-Type": "application/json",
-         },
-         body: JSON.stringify(body),
-      })
-
-      const { url: signedUrl } = await response.json()
-
-      return signedUrl
-   }
-
-   const fileUpload = async (signedUrl: string, createdContact: ContactApi) => {
-      const { image } = createdContact
-
-      if (!image) {
-         return
-      }
-
-      const mime = getMime(createdContact.image as string)
-
-      const fileBlob = new Blob([contact.imageContent!], {
-         type: mime,
-      })
-
-      const response = await fetch(`${signedUrl}`, {
-         method: "PUT",
-         headers: {
-            "Content-Type": mime,
-         },
-         body: fileBlob,
-      })
-   }
-
-   function getMime(imageName: string) {
-      const extension = imageName.split(".").pop()!
-
-      const imageTypes = {
-         png: "image/png",
-         jpeg: "image/jpeg",
-         jpg: "image/jpeg",
-         avif: "image/avif",
-         webp: "image/webp",
-      }
-
-      const mime = imageTypes[extension as keyof typeof imageTypes]
-
-      return mime
    }
 
    const changeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
