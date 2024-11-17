@@ -2,8 +2,8 @@ import { memo } from "react"
 import "./styles.css"
 import { Link } from "react-router-dom"
 import { useContacts } from "~hooks/useContacts"
-import { env } from "~env"
 import ContactItem from "./ContactItem/index"
+import { deleteContactRequest } from "~src/services/contacts"
 
 const ContactList = () => {
    const { contacts, removeContact } = useContacts()
@@ -13,20 +13,13 @@ const ContactList = () => {
          return
       }
 
-      const res = await sendRequest(id)
+      const response = await deleteContactRequest(id)
 
-      if (!res.ok) {
+      if (!response.responseIsOk) {
          return
       }
 
       removeContact(id)
-   }
-
-   const sendRequest = async (id: string) => {
-      const url = env.backendUrl
-      const res = await fetch(`${url}/contacts/${id}`, { method: "DELETE" })
-
-      return res
    }
 
    return (
