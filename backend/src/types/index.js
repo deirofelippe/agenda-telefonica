@@ -9,6 +9,12 @@
  * @property {string} updatedAt
  */
 
+/**
+ * @typedef {Object} ServiceReturn
+ * @property {{ message: string }[]} errors
+ * @property {*} data
+ */
+
 /** @typedef {import("@aws-sdk/client-s3").DeleteObjectCommandInput} DeleteObjectCommandInput */
 /** @typedef {import("@aws-sdk/client-s3").PutObjectCommandInput} PutObjectCommandInput */
 
