@@ -56,6 +56,22 @@ async function findById(id) {
 }
 
 /**
+ * @param {string} phone
+ * @returns {Promise<Contact|undefined>}
+ * */
+async function findByPhone(phone) {
+  try {
+    const result = await model.findOne({ where: { phone } });
+
+    return result?.dataValues;
+  } catch (error) {
+    console.error("[BD ERROR] " + error);
+    console.error(error);
+    throw "error";
+  }
+}
+
+/**
  * @param {Contact} contact
  * @returns {Promise<void>}
  * */
@@ -84,4 +100,4 @@ async function remove(id) {
   }
 }
 
-export const dao = { remove, update, findById, findAll, create };
+export const dao = { remove, update, findById, findByPhone, findAll, create };
