@@ -9,19 +9,19 @@ const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
 const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
 const testDbConfig = () => ({
-  username: process.env.DB_USERNAME_TEST,
-  password: process.env.DB_PASSWORD_TEST,
-  database: process.env.DB_DATABASE_TEST,
-  host: process.env.DB_HOST,
-  dialect: process.env.DB_DIALECT_TEST,
+  host: "mysql",
+  username: "root",
+  password: "root",
+  database: "agenda_test",
+  dialect: "mysql",
 });
 
 const ciDbConfig = () => ({
-  username: process.env.DB_USERNAME_CI,
-  password: process.env.DB_PASSWORD_CI,
-  database: process.env.DB_DATABASE_CI,
-  host: process.env.DB_HOST_CI,
-  dialect: process.env.DB_DIALECT_CI,
+  host: "localhost",
+  username: "root",
+  password: "root",
+  database: "agenda_test",
+  dialect: "mysql",
 });
 
 const productionDbConfig = () => ({
@@ -33,11 +33,11 @@ const productionDbConfig = () => ({
 });
 
 const developmentDbConfig = () => ({
-  username: process.env.DB_USERNAME_DEV,
-  password: process.env.DB_PASSWORD_DEV,
-  database: process.env.DB_DATABASE_DEV,
-  host: process.env.DB_HOST_DEV,
-  dialect: process.env.DB_DIALECT_DEV,
+  host: "mysql",
+  username: "root",
+  password: "root",
+  database: "agenda",
+  dialect: "mysql",
 });
 
 const chooseDbConfig = {
