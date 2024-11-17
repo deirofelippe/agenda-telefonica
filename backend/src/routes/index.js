@@ -5,7 +5,7 @@ import * as contactsController from "../controller/contacts.controller.js";
 
 const router = express.Router();
 
-router.post("/images/presigned-url", imagesController.preSignedUrl);
+router.get("/images/presigned-url", imagesController.preSignedUrl);
 
 router.post("/contacts", contactsController.create);
 router.get("/contacts", contactsController.findAll);
