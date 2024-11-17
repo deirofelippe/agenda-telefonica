@@ -29,6 +29,7 @@ const jestConfig = {
     "!src/config",
     "!src/routes",
     "!src/database",
+    "!src/types",
   ],
 
   // The directory where Jest should output its coverage files
