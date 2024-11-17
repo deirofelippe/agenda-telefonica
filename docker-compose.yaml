@@ -4,16 +4,17 @@ networks:
     driver: bridge
 
 services:
-  develop-agenda:
-    image: deirofelippe/develop-agenda:latest
+  agenda-develop:
+    image: deirofelippe/agenda-telefonica-develop:latest
     build:
       context: ./
       dockerfile: Dockerfile
-    container_name: develop-agenda
+    container_name: agenda-develop
     volumes:
       - "./:/home/node/app"
 
   agenda-backend:
+    image: deirofelippe/agenda-telefonica-backend:latest
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -26,6 +27,7 @@ services:
       - mysql
 
   agenda-frontend:
+    image: deirofelippe/agenda-telefonica-frontend:latest
     build:
       context: ./frontend
       dockerfile: Dockerfile
