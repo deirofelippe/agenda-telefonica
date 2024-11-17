@@ -6,6 +6,8 @@ import { ContactApi, ContactProps } from "~types/index"
 import { env } from "~env"
 import { useContacts } from "~hooks/useContacts"
 import { getImageURL } from "~utils/index"
+import { updateContactRequest } from "~src/services/contacts"
+import { generatePresignedUrl, uploadFile } from "~src/services/images"
 
 const ContactEdit = () => {
    const { id } = useParams()
@@ -45,7 +47,6 @@ const ContactEdit = () => {
          redirectToHome()
       }
 
-      console.log(contactFound)
       setContactToEdit({
          ...contactFound!,
       })
@@ -112,119 +113,43 @@ const ContactEdit = () => {
    const edit = async (event: React.MouseEvent) => {
       event.preventDefault()
 
-      const { responseIsOk, updatedContact } = await sendRequest()
+      const { responseIsOk, updatedContact } =
+         await updateContactRequest(contactToEdit)
 
       if (!responseIsOk) {
          return
       }
 
-      if (imageStatus.updateImage && contactToEdit.imageContent !== undefined) {
-         const signedUrl = await generatePreSignedUrl(
+      const hasImage =
+         imageStatus.updateImage === true &&
+         contactToEdit.imageContent !== undefined
+      let imageName = ""
+      if (hasImage) {
+         const { signedUrl } = await generatePresignedUrl(
             updatedContact.image as string
          )
 
-         await fileUpload(signedUrl, updatedContact)
-      }
+         await uploadFile({
+            imageContent: contactToEdit.imageContent!,
+            imageName: updatedContact.image!,
+            signedUrl,
+         })
 
-      const timestamp = Date.now()
-      const removeCacheImage = `?${timestamp}`
+         const timestamp = Date.now()
+         const removeCacheImage = `?${timestamp}`
+
+         imageName = updatedContact.image + removeCacheImage
+      }
 
       const contactToEditInContext: ContactProps = {
          ...contactToEdit,
          ...updatedContact,
-         imageName: updatedContact.image + removeCacheImage,
+         imageName,
       }
 
       editContact(contactToEditInContext)
 
       navigate(`/`)
-   }
-
-   const sendRequest = async (): Promise<{
-      responseIsOk: boolean
-      updatedContact: ContactApi
-   }> => {
-      const body: ContactApi = {
-         ...contactToEdit,
-         image: contactToEdit.imageName ?? "",
-      }
-
-      const url = env.backendUrl
-
-      const response = await fetch(`${url}/contacts/${id}`, {
-         method: "PUT",
-         headers: {
-            "Content-Type": "application/json",
-         },
-         body: JSON.stringify(body),
-      })
-
-      const { updatedContact } = await response.json()
-
-      updatedContact.imageName = updatedContact?.image ?? ""
-
-      return {
-         updatedContact,
-         responseIsOk: response.ok,
-      }
-   }
-
-   const generatePreSignedUrl = async (imageName: string): Promise<string> => {
-      const url = env.backendUrl
-
-      const body = {
-         imageName: imageName,
-      }
-
-      const response = await fetch(`${url}/images/presigned-url`, {
-         method: "POST",
-         headers: {
-            "Content-Type": "application/json",
-         },
-         body: JSON.stringify(body),
-      })
-
-      const { url: signedUrl } = await response.json()
-
-      return signedUrl
-   }
-
-   const fileUpload = async (signedUrl: string, updatedContact: ContactApi) => {
-      const { image } = updatedContact
-
-      if (!image) {
-         return
-      }
-
-      const mime = getMime(updatedContact.image as string)
-
-      const fileBlob = new Blob([contactToEdit.imageContent!], {
-         type: mime,
-      })
-
-      const response = await fetch(`${signedUrl}`, {
-         method: "PUT",
-         headers: {
-            "Content-Type": mime,
-         },
-         body: fileBlob,
-      })
-   }
-
-   function getMime(imageName: string) {
-      const extension = imageName.split(".").pop()!
-
-      const imageTypes = {
-         png: "image/png",
-         jpeg: "image/jpeg",
-         jpg: "image/jpeg",
-         avif: "image/avif",
-         webp: "image/webp",
-      }
-
-      const mime = imageTypes[extension as keyof typeof imageTypes]
-
-      return mime
    }
 
    return (
