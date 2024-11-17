@@ -1,8 +1,8 @@
 import { Sequelize } from "sequelize";
-import { config as dbConfig } from "../config/database.js";
 import Contact from "../models/contact.js";
+import { env } from "../env.js";
 
-const connection = new Sequelize(dbConfig);
+const connection = new Sequelize(env.dbConfig);
 
 Contact.init(connection);
 
