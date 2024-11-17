@@ -17,7 +17,7 @@ function contactFactory(amount = 1) {
       id: uuid.v4(),
       name: faker.person.fullName(),
       email: faker.internet.email(),
-      phone: faker.number.int({ min: 1000000000, max: 9999999999 }),
+      phone: faker.number.int({ min: 1000000000, max: 9999999999 }) + "",
       image: faker.string.alpha(10) + ".png",
     });
   }
