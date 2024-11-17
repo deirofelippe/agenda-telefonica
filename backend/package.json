@@ -36,9 +36,10 @@
     "dev": "node --env-file=./.env --watch-path=./src src/server.js",
     "pre": "cross-env NODE_ENV=test npx sequelize db:migrate",
     "post": "cross-env NODE_ENV=test npx sequelize db:migrate:undo:all",
-    "test": "cross-env NODE_ENV=test node --experimental-vm-modules ./node_modules/jest/bin/jest.js --config jest.config.js --runInBand --detectOpenHandles",
+    "test": "cross-env NODE_ENV=test node --env-file=./.env --experimental-vm-modules ./node_modules/jest/bin/jest.js --config jest.config.js --runInBand --detectOpenHandles",
     "test:watch": "npm run test -- --watch",
-    "test:cov": "npm run test -- --coverage --no-cache"
+    "test:cov": "npm run test -- --coverage --no-cache",
+    "test:cov:ci": "cross-env NODE_ENV=ci node --env-file=./.env --experimental-vm-modules ./node_modules/jest/bin/jest.js --config jest.config.js --runInBand --detectOpenHandles --coverage --no-cache"
   },
   "keywords": [],
   "author": "",
