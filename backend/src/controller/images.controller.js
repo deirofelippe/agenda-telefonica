@@ -1,7 +1,5 @@
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-
 import "../types/index.js";
+import generatePresignedUrl from "../services/images/generate-presigned-url.js";
 
 /**
  * @param {RequestExpress} req
@@ -9,40 +7,16 @@ import "../types/index.js";
  * @returns {ResponseExpress}
  */
 async function preSignedUrl(req, res) {
-  try {
-    /** @type {{ imageName: string }} */
-    const body = req.body;
+  /** @type {{ imageName: string }} */
+  const imageName = req.query.imageName;
 
-    /** @type {DeleteObjectCommandInput} */
-    const clientParams = {
-      region: "sa-east-1",
-      forcePathStyle: true,
-      credentials: {
-        accessKeyId: "",
-        secretAccessKey: "",
-      },
-      endpoint: "http://localhost:4566",
-    };
+  const { data, errors } = await generatePresignedUrl(imageName);
 
-    const client = new S3Client(clientParams);
-
-    const imageName = body.imageName;
-
-    /** @type {PutObjectCommandInput} */
-    const putObjectParams = {
-      Bucket: "agenda-images",
-      Key: imageName,
-      ACL: "public-read",
-    };
-
-    const command = new PutObjectCommand(putObjectParams);
-
-    const url = await getSignedUrl(client, command, { expiresIn: 120 });
-
-    res.status(200).json({ url });
-  } catch (error) {
-    res.status(500).json({ error });
+  if (errors.length > 0) {
+    return res.status(422).json({ errors });
   }
+
+  return res.status(200).json({ url: data.url });
 }
 
 export { preSignedUrl };
