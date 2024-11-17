@@ -1,8 +1,8 @@
 import React, { useEffect, useReducer } from "react"
-import { ContactApi, ContactProps } from "~types/index"
+import { ContactProps } from "~types/index"
 import appReduce from "./AppReduce"
-import { env } from "~env"
 import ContactContext from "./ContactContext"
+import { findAllContactsRequest } from "~src/services/contacts"
 
 const initialState: { contacts: ContactProps[] } = {
    contacts: [],
@@ -17,17 +17,7 @@ const ContactProvider = ({ children }: ContactProviderProps) => {
 
    useEffect(() => {
       ;(async () => {
-         const findAll = async (): Promise<ContactApi[]> => {
-            const url = env.backendUrl
-
-            const res = await fetch(`${url}/contacts`, { method: "GET" })
-
-            const response = await res.json()
-
-            return response.contacts
-         }
-
-         const contactsFound = await findAll()
+         const { contacts: contactsFound } = await findAllContactsRequest()
 
          const contacts = contactsFound.map(
             (contact): ContactProps => ({
