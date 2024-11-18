@@ -32,8 +32,8 @@
     "supertest": "^7.0.0"
   },
   "scripts": {
-    "start": "node --env-file=./.env src/server.js",
-    "dev": "node --env-file=./.env --watch-path=./src src/server.js",
+    "start": "cross-env NODE_ENV=production node --env-file=./.env src/server.js",
+    "dev": "cross-env NODE_ENV=development node --env-file=./.env --watch-path=./src src/server.js",
     "pre": "cross-env NODE_ENV=test npx sequelize db:migrate",
     "post": "cross-env NODE_ENV=test npx sequelize db:migrate:undo:all",
     "test": "cross-env NODE_ENV=test node --env-file=./.env --experimental-vm-modules ./node_modules/jest/bin/jest.js --config jest.config.js --runInBand --detectOpenHandles",
