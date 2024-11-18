@@ -100,4 +100,24 @@ async function remove(id) {
   }
 }
 
-export const dao = { remove, update, findById, findByPhone, findAll, create };
+async function healthcheck() {
+  try {
+    return await model.findAll({
+      limit: 1,
+    });
+  } catch (error) {
+    console.error("[BD ERROR] " + error);
+    console.error(error);
+    throw "error";
+  }
+}
+
+export const dao = {
+  remove,
+  update,
+  findById,
+  findByPhone,
+  findAll,
+  create,
+  healthcheck,
+};
