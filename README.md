@@ -1,27 +1,49 @@
 # Agenda telefônica
 
 - [Como usar com docker?](#como-usar-com-docker)
+    - [Como usar com docker?](#como-usar-com-docker)
+    - [Executar os testes do backend e cobertura de código](#executar-os-testes-do-backend-e-cobertura-de-código)
+    - [Executar em produção](#executar-em-produção)
+    - [Executar em desenvolvimento](#executar-em-desenvolvimento)
 - [Screenshots v2](#screenshots-v2)
 - [Screenshots v1](#screenshots-v1)
 
+## Ferramentas usadas
+
+| Nome | Versão |
+| :-: | :-: |
+| Docker | 27.3.1, build ce12230 |
+| Docker Compose | v2.29.7 |
+| Localstack | 3.1.10 |
+| MySQL | 8.0 |
+| Act (GH Actions) | v0.2.61 |
+| Nodejs | 22.11.0 |
+| Reactjs | 18.13.1 |
+| Typescript | 5.6.2 |
+| Vite | 5.4.10 |
+
 ## Como usar com docker?
 
-1. `sh run-app.sh`
+- `make init-all`: inicia os containers e terraform
 
 **OU**
 
-1. `docker volume create --name=v_mysql`
-1. `docker-compose up -d`
-1. `docker-compose exec mysql mysql -uroot --password=root -e "create database if not exists agenda; create database if not exists agenda_test;"`
-1. `docker-compose exec agenda-backend npx sequelize db:migrate`
-1. `docker-compose exec agenda-backend npx sequelize db:seed:all`
-1. `docker-compose exec -d agenda-backend npm start`
-1. `docker-compose exec -d agenda-frontend npm start`
-1. siga os passos do README da pasta `s3-serverless`
+- `make up`: inicia todos os containers
+- `make terraform-apply-local`
 
-**CASO QUEIRA EXECUTAR OS TESTES**
+### Executar os testes do backend e cobertura de código
 
-1. `docker-compose exec agenda-backend npm test`
+- `make backend-test`
+
+### Executar em produção
+
+- `make backend-start`
+- `make frontend-express`
+
+### Executar em desenvolvimento
+
+- Abre o vscode na pasta da aplicação
+- Abrir o vscode no docker: `ctrl+shift+p` > `"Dev Containers: Rebuild and Reopen in Container"` > `enter`
 
 ## Screenshots v2
 
