@@ -1,9 +1,15 @@
 import express from "express";
+import { dao } from "../dao/contact.dao.js";
 
 import * as imagesController from "../controller/images.controller.js";
 import * as contactsController from "../controller/contacts.controller.js";
 
 const router = express.Router();
+
+router.get("/healthz", async function (req, res) {
+  const result = await dao.healthcheck();
+  return res.status(200).json({ result });
+});
 
 router.get("/images/presigned-url", imagesController.preSignedUrl);
 
