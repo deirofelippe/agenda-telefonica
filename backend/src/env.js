@@ -47,9 +47,10 @@ const chooseDbConfig = {
   ci: ciDbConfig,
 };
 
-let dbConfig = chooseDbConfig[nodeEnv];
+const dbConfigFunction = chooseDbConfig[nodeEnv];
 
 const env = {
+  nodeEnv,
   isTesting,
   isProduction,
   isDevelopment,
@@ -57,7 +58,7 @@ const env = {
   region,
   accessKeyId,
   secretAccessKey,
-  dbConfig: dbConfig(),
+  dbConfig: dbConfigFunction(),
 };
 
 export { env };
