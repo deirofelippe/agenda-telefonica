@@ -14,30 +14,56 @@ services:
       - "./:/home/node/app"
 
   agenda-backend:
-    image: deirofelippe/agenda-telefonica-backend:latest
+    image: deirofelippe/agenda-telefonica-backend-dev:latest
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     container_name: agenda-backend
+    env_file:
+      - ./backend/.env
     volumes:
-      - "./backend:/app"
+      - "./backend:/home/node/app"
     ports:
       - "3000:3000"
+    restart: unless-stopped
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
+      localstack:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 512M
 
   agenda-frontend:
-    image: deirofelippe/agenda-telefonica-frontend:latest
+    image: deirofelippe/agenda-telefonica-frontend-dev:latest
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     container_name: agenda-frontend
     volumes:
-      - "./frontend:/app"
+      - "./frontend:/home/node/app"
     ports:
       - "3001:3000"
+    restart: unless-stopped
     depends_on:
-      - agenda-backend
+      agenda-backend:
+        condition: service_healthy
+      localstack:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 512M
 
   mysql:
     image: mysql:8.0
@@ -48,16 +74,29 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: agenda
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   localstack:
     image: localstack/localstack:3.1.0
     container_name: localstack
+    restart: unless-stopped
     ports:
       - "4566:4566"
       - "4510-4559:4510-4559"
     environment:
       - DEBUG=0
       - AWS_DEFAULT_REGION=sa-east-1
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4566/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:5.1.1
@@ -66,6 +105,7 @@ services:
     ports:
       - "8081:80"
     environment:
-      PMA_HOST: mysql
+      PMA_HOSTS: mysql, terraform-20241118003001874200000001.clkewgq2okic.sa-east-1.rds.amazonaws.com
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
