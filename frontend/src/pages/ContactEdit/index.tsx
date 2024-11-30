@@ -123,7 +123,8 @@ const ContactEdit = () => {
       const hasImage =
          imageStatus.updateImage === true &&
          contactToEdit.imageContent !== undefined
-      let imageName = ""
+
+      let imageName = contactToEdit.imageName ?? ""
       if (hasImage) {
          const { signedUrl } = await generatePresignedUrl(
             updatedContact.image as string
