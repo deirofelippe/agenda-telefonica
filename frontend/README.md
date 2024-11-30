@@ -1,50 +1,24 @@
-# React + TypeScript + Vite
+# Agenda Telefônica Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Checklist
 
-Currently, two official plugins are available:
+- [ ]: usar o `memo`
+- [ ]: usar configurar o error boundaries
+- [x]: usar o `useContext`
+- [x]: usar o `useReducer`
+- [ ]: usar o forward ref
+- [ ]: usar o lazy e suspense
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Estrutura das pastas
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- `contexts`
+- `hooks`
+- `services`: acesso a apis.
+- `components`: componentes que são usados em mais de uma página ou componente.
+- `utils`: códigos que são usados em mais de 1 arquivo.
+- `page`: componentes que é usado para renderizar uma página.
+  - `ContactList`: nome do componente que vai renderizar a página.
+    - `components`: componentes que só serão usados nos componentes de ContactList.
+    - `hooks`: hooks que só serão usados nos componentes de ContactList.
+    - `tests`: testes voltados ao componente ContactList.
+    - `utils`: códigos que só serão usados nos componentes de ContactList.
