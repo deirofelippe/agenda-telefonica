@@ -26,7 +26,7 @@ resource "aws_security_group" "api" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["${chomp(data.http.myip.response_body)}/32"]
+    cidr_blocks = ["${trimspace(data.http.myip.response_body)}/32"]
   }
 
   egress {
@@ -51,7 +51,7 @@ resource "aws_security_group" "mysql" {
     from_port   = 3306
     to_port     = 3306
     protocol    = "tcp"
-    cidr_blocks = ["${chomp(data.http.myip.response_body)}/32"]
+    cidr_blocks = ["${trimspace(data.http.myip.response_body)}/32"]
   }
 
   ingress {
@@ -67,7 +67,7 @@ resource "aws_security_group" "mysql" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["${chomp(data.http.myip.response_body)}/32"]
+    cidr_blocks = ["${trimspace(data.http.myip.response_body)}/32"]
   }
 
   egress {
