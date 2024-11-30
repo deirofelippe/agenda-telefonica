@@ -21,18 +21,18 @@ data "aws_iam_policy_document" "allow_public_access" {
     effect = "Allow"
 
     resources = [
-      "${aws_s3_bucket.frontend.arn}/*",
       "${aws_s3_bucket.frontend.arn}",
+      "${aws_s3_bucket.frontend.arn}/*",
     ]
   }
 }
 
-resource "aws_s3_bucket_policy" "this" {
+resource "aws_s3_bucket_policy" "frontend" {
   bucket = aws_s3_bucket.frontend.id
   policy = data.aws_iam_policy_document.allow_public_access.json
 }
 
-resource "aws_s3_bucket_ownership_controls" "this" {
+resource "aws_s3_bucket_ownership_controls" "frontend" {
   bucket = aws_s3_bucket.frontend.id
 
   rule {
@@ -40,7 +40,7 @@ resource "aws_s3_bucket_ownership_controls" "this" {
   }
 }
 
-resource "aws_s3_bucket_public_access_block" "this" {
+resource "aws_s3_bucket_public_access_block" "frontend" {
   bucket = aws_s3_bucket.frontend.id
 
   block_public_acls       = false
@@ -49,10 +49,10 @@ resource "aws_s3_bucket_public_access_block" "this" {
   restrict_public_buckets = false
 }
 
-resource "aws_s3_bucket_acl" "this" {
+resource "aws_s3_bucket_acl" "frontend" {
   depends_on = [
-    aws_s3_bucket_ownership_controls.this,
-    aws_s3_bucket_public_access_block.this,
+    aws_s3_bucket_ownership_controls.frontend,
+    aws_s3_bucket_public_access_block.frontend,
   ]
 
   bucket = aws_s3_bucket.frontend.id
@@ -67,7 +67,7 @@ resource "aws_s3_bucket_versioning" "frontend" {
   }
 }
 
-resource "aws_s3_bucket_website_configuration" "this" {
+resource "aws_s3_bucket_website_configuration" "frontend" {
   bucket = aws_s3_bucket.frontend.id
 
   index_document {
@@ -79,18 +79,14 @@ resource "aws_s3_bucket_website_configuration" "this" {
   }
 }
 
-resource "aws_s3_bucket_cors_configuration" "this" {
+resource "aws_s3_bucket_cors_configuration" "frontend" {
   bucket = aws_s3_bucket.frontend.id
 
   cors_rule {
     allowed_headers = ["*"]
-    allowed_methods = ["PUT", "POST", "GET"]
+    allowed_methods = ["PUT", "POST"]
     allowed_origins = [
-      "*",
-      # "http://localhost:3000",
-      # "https://agenda-backend:3000",
-      # "http://${aws_instance.this.public_dns}",
-      # "https://${aws_instance.this.public_dns}",
+      "*"
     ]
     expose_headers  = ["ETag"]
     max_age_seconds = 3000
@@ -103,7 +99,7 @@ resource "aws_s3_bucket_cors_configuration" "this" {
 }
 
 
-resource "aws_s3_object" "this" {
+resource "aws_s3_object" "frontend" {
   for_each = fileset("${path.root}/../frontend/dist", "**")
 
   content_type = [for key, value in var.content_types : value if key == regex("\\.[a-zA-Z]+$", each.value)][0]
