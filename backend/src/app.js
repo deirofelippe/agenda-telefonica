@@ -2,11 +2,12 @@ import express from "express";
 import cors from "cors";
 import routes from "./routes/index.js";
 import "./types/index.js";
+import { env } from "./env.js";
 
 const app = express();
 
 app.use(express.json());
-app.use(cors({ origin: "*" }));
+app.use(cors({ origin: env.frontendUrl }));
 app.use(express.urlencoded({ extended: true }));
 app.use(routes);
 app.use(errorHandler);
