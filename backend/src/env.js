@@ -8,6 +8,12 @@ const region = process.env.AWS_REGION;
 const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
 const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
+let frontendUrl = process.env.FRONTEND_URL;
+
+if (!isProduction) {
+  frontendUrl = ["http://localhost:3001", "http://agenda-frontend:3000"];
+}
+
 const testDbConfig = () => ({
   host: "mysql",
   username: "root",
@@ -50,6 +56,7 @@ const chooseDbConfig = {
 const dbConfigFunction = chooseDbConfig[nodeEnv];
 
 const env = {
+  frontendUrl,
   nodeEnv,
   isTesting,
   isProduction,
