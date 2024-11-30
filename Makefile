@@ -20,6 +20,9 @@ down:
 backend-dev:
 	@docker container exec -it -u node agenda-backend ash -c "npm run dev"
 
+backend-logs:
+	@docker container logs -f agenda-backend 
+
 backend-exec:
 	@docker container exec -it -u node agenda-backend ash
 
@@ -32,8 +35,14 @@ backend-test:
 frontend-dev:
 	@docker container exec -it -u node agenda-frontend ash -c "npm run dev"
 
+frontend-build:
+	@docker container exec -it -u node agenda-frontend ash -c "npm run build:prod"
+
 frontend-express:
 	@docker container exec -it -u node agenda-frontend ash -c "npm run dev:express"
+
+frontend-logs:
+	@docker container logs -f agenda-frontend 
 
 frontend-exec:
 	@docker container exec -it -u node agenda-frontend ash 
