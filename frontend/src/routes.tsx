@@ -6,13 +6,10 @@ import { createBrowserRouter } from "react-router-dom"
 
 const router = createBrowserRouter(
    [
+      { path: "/", element: <ContactList />, errorElement: <ContactList /> },
       { path: "/contact/edit/:id", element: <ContactEdit /> },
       { path: "/contact/form", element: <ContactForm /> },
       { path: "/contact/:id", element: <Contact /> },
-      {
-         path: "/",
-         element: <ContactList />,
-      },
    ],
    {
       future: {

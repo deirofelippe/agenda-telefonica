@@ -1,0 +1,9 @@
+[Unit]
+Description=Docker do Sistema Agenda Backend
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /usr/bin/agenda-backend.sh
+
+[Install]
+WantedBy=multi-user.target

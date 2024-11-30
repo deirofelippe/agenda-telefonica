@@ -1,0 +1,26 @@
+server {
+    server_name localhost 127.0.0.1;
+    listen 80; 
+    # listen 80 http2; 
+
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options "nosniff";
+    add_header Strict-Transport-Security "max-age=31536000; includeSubdomains; preload";
+    add_header X-XSS-Protection "1; mode=block";                                                 
+    add_header Referrer-Policy "strict-origin";
+
+    proxy_hide_header Server;
+    proxy_hide_header X-Powered-By;
+    add_header Server "Apache/2.4.18";
+    add_header X-Powered-By "PHP/7.4.16";
+
+    location / {
+        proxy_set_header   Host               $host;
+        proxy_set_header   Request-Url        "$server_name$request_uri";
+        proxy_set_header   X-Real-IP          $remote_addr;
+        proxy_set_header   X-Forwarded-Proto  $scheme;
+        proxy_set_header   X-Forwarded-For    $proxy_add_x_forwarded_for;
+
+        proxy_pass http://localhost:3000;
+    }
+}
