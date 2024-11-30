@@ -11,18 +11,18 @@ echo "============================================="
 echo "========== CONFIG DOCKER ===================="
 echo "============================================="
 echo ""
-source ./config-docker.sh
+source $HOME_SCRIPTS_PATH/config-docker.sh
 
 echo ""
 echo "============================================="
 echo "========== CONFIG NGINX ====================="
 echo "============================================="
 echo ""
-source ./config-nginx.sh
+source $HOME_SCRIPTS_PATH/config-nginx.sh
 
 echo ""
 echo "============================================="
 echo "========== CONFIG SYSTEMD ==================="
 echo "============================================="
 echo ""
-source ./config-systemd.sh
+source $HOME_SCRIPTS_PATH/config-systemd.sh
