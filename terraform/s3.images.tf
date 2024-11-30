@@ -6,6 +6,23 @@ resource "aws_s3_bucket" "images" {
   }
 }
 
+resource "aws_s3_bucket_public_access_block" "images" {
+  bucket = aws_s3_bucket.images.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
+resource "aws_s3_bucket_ownership_controls" "images" {
+  bucket = aws_s3_bucket.images.id
+
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
 resource "aws_s3_bucket_cors_configuration" "images" {
   bucket = aws_s3_bucket.images.id
 
@@ -17,6 +34,8 @@ resource "aws_s3_bucket_cors_configuration" "images" {
       "https://${aws_instance.this.public_dns}",
       "http://${aws_instance.this.public_ip}",
       "https://${aws_instance.this.public_ip}",
+      "http://${aws_s3_bucket_website_configuration.frontend.website_endpoint}",
+      "https://${aws_s3_bucket_website_configuration.frontend.website_endpoint}",
     ]
     expose_headers  = ["ETag"]
     max_age_seconds = 3000
