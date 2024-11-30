@@ -7,11 +7,13 @@ export default function getS3Client(endpoint = "http://localstack:4566") {
     region: env.region,
     forcePathStyle: true,
     endpoint: endpoint,
+    credentials: { accessKeyId: "", secretAccessKey: "" },
   };
 
   if (env.isProduction) {
     delete clientParams.endpoint;
     delete clientParams.forcePathStyle;
+    delete clientParams.credentials;
   }
 
   const client = new S3Client(clientParams);
