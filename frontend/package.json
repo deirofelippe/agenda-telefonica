@@ -9,11 +9,13 @@
    "type": "module",
    "scripts": {
       "open": "firefox --new-window ./dist/index.html",
-      "dev": "NODE_ENV_AUX=development npx vite --port 3000 --host 0.0.0.0",
-      "predev:express": "npm run build",
-      "dev:express": "node --watch-path=./express.js ./express.js",
-      "build": "npx tsc -b && npx vite build --base ''",
+      "dev": "npm run env:dev && npx vite --port 3000 --host 0.0.0.0",
+      "express": "npm run build:dev && node --watch-path=./express.js ./express.js",
+      "build:dev": "npm run env:dev && npx tsc -b && npx vite build --base ''",
+      "build:prod": "npm run env:prod && npx tsc -b && npx vite build --base ''",
       "lint": "npx eslint .",
+      "env:dev": "sed -i 's/let nodeEnv: NodeEnv = \"production\"/let nodeEnv: NodeEnv = \"development\"/g' ./src/env.ts",
+      "env:prod": "sed -i 's/let nodeEnv: NodeEnv = \"development\"/let nodeEnv: NodeEnv = \"production\"/g' ./src/env.ts",
       "preview": "npx vite preview"
    },
    "dependencies": {
