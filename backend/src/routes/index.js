@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get("/healthz", async function (req, res) {
   const result = await dao.healthcheck();
-  return res.status(200).json({ result });
+  return res.status(200).json({ message: "healthy" });
 });
 
 router.get("/images/presigned-url", imagesController.preSignedUrl);
