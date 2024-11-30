@@ -22,7 +22,6 @@
     "@faker-js/faker": "^9.2.0",
     "@types/express": "^5.0.0",
     "@types/node": "^22.9.0",
-    "cross-env": "^7.0.3",
     "eslint": "^9.15.0",
     "express-generator": "^4.2.0",
     "globals": "^15.12.0",
@@ -32,14 +31,15 @@
     "supertest": "^7.0.0"
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=production node --env-file=./.env src/server.js",
-    "dev": "cross-env NODE_ENV=development node --env-file=./.env --watch-path=./src src/server.js",
-    "pre": "cross-env NODE_ENV=test npx sequelize db:migrate",
-    "post": "cross-env NODE_ENV=test npx sequelize db:migrate:undo:all",
-    "test": "cross-env NODE_ENV=test node --env-file=./.env --experimental-vm-modules ./node_modules/jest/bin/jest.js --config jest.config.js --runInBand --detectOpenHandles",
+    "start": "NODE_ENV=production node src/server.js",
+    "start:watch": "NODE_ENV=production node --watch-path=./src --env-file=./.env src/server.js src/server.js",
+    "dev": "NODE_ENV=development node --env-file=./.env --watch-path=./src src/server.js",
+    "pre": "NODE_ENV=test npx sequelize db:migrate",
+    "post": "NODE_ENV=test npx sequelize db:migrate:undo:all",
+    "test": "NODE_ENV=test node --env-file=./.env --experimental-vm-modules ./node_modules/jest/bin/jest.js --config jest.config.js --runInBand --detectOpenHandles",
     "test:watch": "npm run test -- --watch",
     "test:cov": "npm run test -- --coverage --no-cache",
-    "test:cov:ci": "cross-env NODE_ENV=ci node --experimental-vm-modules ./node_modules/jest/bin/jest.js --config jest.config.js --runInBand --detectOpenHandles --coverage --no-cache"
+    "test:cov:ci": "NODE_ENV=ci node --experimental-vm-modules ./node_modules/jest/bin/jest.js --config jest.config.js --runInBand --detectOpenHandles --coverage --no-cache"
   },
   "keywords": [],
   "author": "",
