@@ -82,7 +82,7 @@
     - Duplique o env file com `cp ./aws-scripts/agenda-backend/.env.backend.example ./aws-scripts/agenda-backend/.env.backend`.
     - Copie o `rds_address` e `s3_frontend_endpoint` e substitua os valores `DB_HOST_PROD` e `FRONTEND_URL` no `.env.backend`.
 - Gere o build do frontend do frontend com as variáveis de ambiente já setadas do IP do EC2.
-    - `docker container run --rm -v $(pwd)/frontend:/home/node/app deirofelippe/agenda-telefonica-frontend-dev:latest npm run build:prod`
+    - `make frontend-pull-and-build`
 - Execute novamente o `make terraform-apply` para fazer upload do build gerado do frontend.
 - Deploy do backend
     - Substitua o `<PUBLIC-IP>` dos comandos abaixo pelo IP do EC2.
