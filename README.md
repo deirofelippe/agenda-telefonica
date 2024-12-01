@@ -81,11 +81,13 @@
     - Copie o `ec2_public_ip` e cole na variável `prodBackendUrl` que está no arquivo `./frontend/src/env.ts`.
     - Duplique o env file com `cp ./aws-scripts/agenda-backend/.env.backend.example ./aws-scripts/agenda-backend/.env.backend`.
     - Copie o `rds_address` e `s3_frontend_endpoint` e substitua os valores `DB_HOST_PROD` e `FRONTEND_URL` no `.env.backend`.
-- Gere o build com o comando `make frontend-build` do frontend com as variáveis de ambiente já setadas do IP do EC2.
+- Gere o build do frontend do frontend com as variáveis de ambiente já setadas do IP do EC2.
+    - `docker container run --rm -v $(pwd)/frontend:/home/node/app deirofelippe/agenda-telefonica-frontend-dev:latest npm run build:prod`
 - Execute novamente o `make terraform-apply` para fazer upload do build gerado do frontend.
 - Deploy do backend
-    - Faça upload do diretório aws-scripts para o EC2 via rsync com ssh `rsync -vahz -e 'ssh -i ./agenda_ec2_key -p 22' ./aws-scripts ubuntu@18.231.238.224:/home/ubuntu`
-    - Execute o script `init-all.sh` que está no EC2 `ssh -i ./agenda_ec2_key ubuntu@18.231.238.224 bash /home/ubuntu/aws-scripts/init-all.sh`
+    - Substitua o `<PUBLIC-IP>` dos comandos abaixo pelo IP do EC2.
+    - Faça upload do diretório aws-scripts para o EC2 via rsync com ssh `rsync -vahz -e 'ssh -i ./agenda_ec2_key -p 22' ./aws-scripts ubuntu@<PUBLIC-IP>:/home/ubuntu`
+    - Execute o script `init-all.sh` que está no EC2 `ssh -i ./agenda_ec2_key ubuntu@<PUBLIC-IP> bash /home/ubuntu/aws-scripts/init-all.sh`
 - Limpar os recursos criados na AWS
     - Delete todos os objetos que existem o bucket `agenda-images` pela GUI ou pela CLI `aws s3 rm --recursive s3://agenda-images`
     - Delete todos os recursos criados com `make terraform-destroy`
@@ -109,3 +111,4 @@
 ![](./img/v1/4.png)
 ![](./img/v1/5.png)
 ![](./img/v1/6.png)
+
