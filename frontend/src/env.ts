@@ -3,17 +3,23 @@ const bucket = "agenda-images"
 
 type NodeEnv = "development" | "production"
 
-let nodeEnv: NodeEnv = "development"
+let nodeEnv: NodeEnv = "production"
+
+const prodS3Url = `https://${bucket}.s3.${region}.amazonaws.com`
+const prodBackendUrl = "http://18.231.238.224"
+
+const devS3Url = `http://localhost:4566/${bucket}`
+const devBackendUrl = "http://localhost:3000"
 
 let s3Url
 let backendUrl
 //@ts-ignore
 if (nodeEnv === "production") {
-   s3Url = `https://${bucket}.s3.${region}.amazonaws.com`
-   backendUrl = "http://54.207.212.151"
+   s3Url = prodS3Url
+   backendUrl = prodBackendUrl
 } else {
-   s3Url = `http://localhost:4566/${bucket}`
-   backendUrl = "http://localhost:3000"
+   s3Url = devS3Url
+   backendUrl = devBackendUrl
 }
 
 const env = {
