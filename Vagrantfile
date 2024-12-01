@@ -5,7 +5,7 @@ Vagrant.configure("2") do |config|
   
     config.vm.network "forwarded_port", guest: 3000, host: 3000
   
-    config.vm.synced_folder "./aws-scripts", "/home/ubuntu/aws-scripts", owner: "vagrant", group: "vagrant"
+    # config.vm.synced_folder "./aws-scripts", "/home/ubuntu/aws-scripts", owner: "vagrant", group: "vagrant"
   
     config.vm.provider "virtualbox" do |vb|
       vb.name = "vb_agenda_aws"
@@ -16,6 +16,7 @@ Vagrant.configure("2") do |config|
     # config.vm.provision "docker" do |d|
     # end
   
-    config.vm.provision "shell", privileged: false, inline: <<-SHELL
+    config.vm.provision "shell", privileged: true, inline: <<-SHELL
+      chown vagrant:vagrant /home/ubuntu
     SHELL
   end
