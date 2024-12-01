@@ -1,5 +1,6 @@
 resource "aws_s3_bucket" "images" {
   bucket = var.bucket_images
+  
   tags = {
     Name = "Agenda Images Bucket"
     Env  = "dev"
