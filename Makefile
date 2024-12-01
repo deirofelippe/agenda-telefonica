@@ -38,6 +38,9 @@ frontend-dev:
 frontend-build:
 	@docker container exec -it -u node agenda-frontend ash -c "npm run build:prod"
 
+frontend-pull-and-build:
+	@docker container run --rm -w /home/node/app -v $$(pwd)/frontend:/home/node/app deirofelippe/agenda-telefonica-frontend-dev:latest ash -c "npm ci && npm run build:prod"
+
 frontend-express:
 	@docker container exec -it -u node agenda-frontend ash -c "npm run dev:express"
 
