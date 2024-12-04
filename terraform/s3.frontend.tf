@@ -6,6 +6,15 @@ resource "aws_s3_bucket" "frontend" {
   }
 }
 
+resource "aws_s3_bucket_public_access_block" "frontend" {
+  bucket = aws_s3_bucket.frontend.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
 data "aws_iam_policy_document" "allow_public_access" {
   statement {
     principals {
@@ -28,25 +37,20 @@ data "aws_iam_policy_document" "allow_public_access" {
 }
 
 resource "aws_s3_bucket_policy" "frontend" {
+  depends_on = [aws_s3_bucket_public_access_block.frontend]
+
   bucket = aws_s3_bucket.frontend.id
   policy = data.aws_iam_policy_document.allow_public_access.json
 }
 
 resource "aws_s3_bucket_ownership_controls" "frontend" {
+  depends_on = [aws_s3_bucket_policy.frontend]
+
   bucket = aws_s3_bucket.frontend.id
 
   rule {
     object_ownership = "BucketOwnerPreferred"
   }
-}
-
-resource "aws_s3_bucket_public_access_block" "frontend" {
-  bucket = aws_s3_bucket.frontend.id
-
-  block_public_acls       = false
-  block_public_policy     = false
-  ignore_public_acls      = false
-  restrict_public_buckets = false
 }
 
 resource "aws_s3_bucket_acl" "frontend" {
@@ -59,27 +63,9 @@ resource "aws_s3_bucket_acl" "frontend" {
   acl    = "public-read"
 }
 
-resource "aws_s3_bucket_versioning" "frontend" {
-  bucket = aws_s3_bucket.frontend.id
-
-  versioning_configuration {
-    status = "Enabled"
-  }
-}
-
-resource "aws_s3_bucket_website_configuration" "frontend" {
-  bucket = aws_s3_bucket.frontend.id
-
-  index_document {
-    suffix = "index.html"
-  }
-
-  error_document {
-    key = "index.html"
-  }
-}
-
 resource "aws_s3_bucket_cors_configuration" "frontend" {
+  depends_on = [aws_s3_bucket_acl.frontend]
+
   bucket = aws_s3_bucket.frontend.id
 
   cors_rule {
@@ -101,6 +87,25 @@ resource "aws_s3_bucket_cors_configuration" "frontend" {
   }
 }
 
+resource "aws_s3_bucket_versioning" "frontend" {
+  bucket = aws_s3_bucket.frontend.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_bucket_website_configuration" "frontend" {
+  bucket = aws_s3_bucket.frontend.id
+
+  index_document {
+    suffix = "index.html"
+  }
+
+  error_document {
+    key = "index.html"
+  }
+}
 
 resource "aws_s3_object" "frontend" {
   for_each = fileset("${path.root}/../frontend/dist", "**")
