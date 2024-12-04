@@ -15,7 +15,7 @@ resource "aws_db_instance" "this" {
   username               = var.db_username
   password               = var.db_password
   parameter_group_name   = "default.mysql8.0"
-  publicly_accessible    = true
+  publicly_accessible    = false
   multi_az               = false
   skip_final_snapshot    = true
   vpc_security_group_ids = [aws_security_group.mysql.id]
