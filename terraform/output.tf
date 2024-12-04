@@ -3,10 +3,12 @@ output "s3_frontend_endpoint" {
 }
 
 output "ec2_public_ip" {
+  depends_on = [ aws_eip.ec2 ]
   value = "http://${aws_instance.this.public_ip}"
 }
 
 output "ec2_public_dns" {
+  depends_on = [ aws_eip.ec2 ]
   value = "http://${aws_instance.this.public_dns}" 
 }
 
