@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "images" {
   bucket = var.bucket_images
-  
+
   tags = {
     Name = "Agenda Images Bucket"
     Env  = "dev"
@@ -17,6 +17,8 @@ resource "aws_s3_bucket_public_access_block" "images" {
 }
 
 resource "aws_s3_bucket_ownership_controls" "images" {
+  depends_on = [aws_s3_bucket_public_access_block.frontend]
+
   bucket = aws_s3_bucket.images.id
 
   rule {
@@ -25,6 +27,8 @@ resource "aws_s3_bucket_ownership_controls" "images" {
 }
 
 resource "aws_s3_bucket_cors_configuration" "images" {
+  depends_on = [aws_s3_bucket_ownership_controls.frontend]
+
   bucket = aws_s3_bucket.images.id
 
   cors_rule {
