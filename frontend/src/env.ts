@@ -6,7 +6,7 @@ type NodeEnv = "development" | "production"
 let nodeEnv: NodeEnv = "production"
 
 const prodS3Url = `https://${bucket}.s3.${region}.amazonaws.com`
-const prodBackendUrl = "http://18.231.238.224"
+const prodBackendUrl = "http://15.229.170.59"
 
 const devS3Url = `http://localhost:4566/${bucket}`
 const devBackendUrl = "http://localhost:3000"

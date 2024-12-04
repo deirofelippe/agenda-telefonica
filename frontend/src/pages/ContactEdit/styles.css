@@ -15,14 +15,14 @@
    align-items: center;
 }
 
-.navbar a i{
-   transition: .5s ease;
+.navbar a i {
+   transition: 0.5s ease;
 }
-.navbar a i:hover{
+.navbar a i:hover {
    color: gray;
 }
 
-.navbar h1{
+.navbar h1 {
    color: white;
    font-weight: 500;
    font-size: 1.3rem;
@@ -40,7 +40,7 @@
    font-size: 1rem;
 }
 
-.section form{
+.section form {
    display: flex;
    flex-direction: column;
    justify-content: space-around;
@@ -70,7 +70,7 @@
    color: inherit;
    cursor: pointer;
    font-family: inherit;
-   transition: .3s ease;
+   transition: 0.3s ease;
 }
 .form-group.remove-image button:hover {
    color: #f79743;
@@ -82,7 +82,7 @@
    align-items: center;
 }
 
-.form-group:last-child{
+.form-group:last-child {
    margin-bottom: 0;
 }
 
@@ -95,44 +95,45 @@
    height: 60px;
    border-radius: 50%;
    margin-right: 15px;
+   object-fit: cover;
 }
 
-.form-group input{
+.form-group input {
    width: 100%;
    margin-top: 10px;
    padding: 8px 10px;
    border: 0 solid black;
    border-bottom: 1px solid #dadada;
    background-color: #fafafa;
-   transition: .2s ease-in;
+   transition: 0.2s ease-in;
 }
 
-.form-group input:focus{
+.form-group input:focus {
    outline: none;
    border-bottom-color: #f79743;
 }
 
-.form-group input[id='image']{
+.form-group input[id="image"] {
    padding: 8px 0;
    cursor: pointer;
 }
 
 @media screen and (max-width: 650px) {
    /* HEADER */
-   
+
    .navbar {
       width: 100%;
       justify-content: space-around;
    }
 
    /* CARD */
-   
-   .section{
+
+   .section {
       height: calc(100vh - 50px);
       width: 100%;
    }
 
-   .section form{
+   .section form {
       justify-content: center;
    }
 }
