@@ -13,6 +13,10 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [21.7.3]
+
     services:
       mysql:
         image: mysql:8.0
@@ -33,7 +37,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22.11.x"
+          node-version: ${{ matrix.version }}
 
       - name: Install dependencies
         working-directory: ${{ env.WORKDIR }}
@@ -63,7 +67,7 @@ jobs:
       # - name: Run SonarQube Scan
       #   run: sonar-scanner
 
-  cd:
+  build:
     needs: [ci]
     runs-on: ubuntu-latest
 
@@ -96,8 +100,8 @@ jobs:
       #     namespace: production
       #     manifests: ./k8s-manifest.yaml
 
-  success-notify:
-    needs: [cd]
+  notify-success:
+    needs: [build]
     runs-on: ubuntu-latest
     if: ${{ success() }}
 
@@ -113,8 +117,8 @@ jobs:
             --header 'Content-Type: application/json' \
             --data "$CURL_DATA"
 
-  failure-notify:
-    needs: [cd]
+  notify-failure:
+    needs: [build]
     runs-on: ubuntu-latest
     if: ${{ failure() }}
 
