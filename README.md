@@ -1,13 +1,14 @@
 # Agenda telefônica
 
-- [Como usar com docker?](#como-usar-com-docker)
+- [Ferramentas usadas](#ferramentas-usadas)
+- [Arquitetura do Sistema na AWS](#arquitetura-do-sistema-na-aws)
+- [Como executar com docker?](#como-executar-com-docker)
     - [Executar os testes do backend e cobertura de código](#executar-os-testes-do-backend-e-cobertura-de-código)
     - [Executar em desenvolvimento](#executar-em-desenvolvimento)
 - [Testar o CI/CD local com Act](#testar-o-cicd-local-com-act)
 - [Testar os scripts para o backend sempre rodar no vagrant](#testar-os-scripts-para-o-backend-sempre-rodar-no-vagrant)
 - [Deploy na AWS](#deploy-na-aws)
-- [Screenshots v2](#screenshots-v2)
-- [Screenshots v1](#screenshots-v1)
+- [Screenshots](#screenshots)
 
 ## Ferramentas usadas
 
@@ -23,7 +24,13 @@
 | Typescript | 5.6.2 |
 | Vite | 5.4.10 |
 
-## Como usar com docker?
+## Arquitetura do Sistema na AWS
+
+<div style="display: flex; justify-content: center; align-items: center;">
+    <img width="672px" height="749px" src="./img/agenda-aws-arch.png" />
+</div>
+
+## Como executar com docker?
 
 - `make init-all`: inicia os containers e terraform
 - As urls para acessar os serviços do docker são:
@@ -92,23 +99,13 @@
     - Delete todos os objetos que existem o bucket `agenda-images` pela GUI ou pela CLI `aws s3 rm --recursive s3://agenda-images`
     - Delete todos os recursos criados com `make terraform-destroy`
 
-## Screenshots v2
+## Screenshots
 
-![](./img/v2/1.png)
-![](./img/v2/2.png)
-![](./img/v2/3.png)
-![](./img/v2/4.png)
-![](./img/v2/5.png)
-![](./img/v2/6.png)
-![](./img/v2/7.png)
-![](./img/v2/8.png)
-
-## Screenshots v1
-
-![](./img/v1/1.png)
-![](./img/v1/2.png)
-![](./img/v1/3.png)
-![](./img/v1/4.png)
-![](./img/v1/5.png)
-![](./img/v1/6.png)
-
+<div style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 25px 0px;">
+    <img width="655px" height="406px" src="./img/1.png" />
+    <img width="655px" height="406px" src="./img/2.png" />
+    <img width="655px" height="406px" src="./img/3.png" />
+    <img width="429px" height="609px" src="./img/4.png" />
+    <img width="429px" height="609px" src="./img/5.png" />
+    <img width="429px" height="609px" src="./img/6.png" />
+</div>
