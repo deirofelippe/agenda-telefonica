@@ -1,38 +1,48 @@
-@host = http://agenda-backend:3000
+@host = http://18.231.238.224
+# @host = http://localhost:3000
+@id = 28ae3473-454d-433a-9800-d3480170b888
 
+GET {{host}}/healthz HTTP/1.1
+
+###
 POST {{host}}/contacts HTTP/1.1
 Content-Type: application/json
 
 {
     "name": "eu",
-    "email": "eua@mail.com",
-    "phone": "91235-5678",
-    "image": "/path/image.png"
+    "email": "sdffssfd@mail.com",
+    "phone": "91235-5679",
+    "image": "image.png"
 }
 
 ###
-POST {{host}}/presigned-url HTTP/1.1
-Content-Type: application/json
-
-{
-    "imageName": "dre.png"
-}
+GET {{host}}/images/presigned-url?imageName=41df7b96-7c4a-44bc-8e55-5b19bf72edae.png HTTP/1.1
 
 ###
 GET {{host}}/contacts HTTP/1.1
 
 ###
-GET {{host}}/contacts/b4a24da6-33b3-47fe-9c44-c8b2b2c43ef4 HTTP/1.1
+GET {{host}}/contacts/{{id}} HTTP/1.1
 
 ###
-PUT {{host}}/contacts/b4a24da6-33b3-47fe-9c44-c8b2b2c43ef4 HTTP/1.1
+PUT {{host}}/contacts/{{id}} HTTP/1.1
 Content-Type: application/json
 
 {
     "name": "euu",
+    "image": "teste.png",
+}
+
+###
+PUT {{host}}/contacts/{{id}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":"{{id}}",
+    "name": "euuu",
     "email": "euasdua@mail.com"
 }
 
 ###
-DELETE {{host}}/contacts/0e430ce1-ab22-4b2f-b150-2b42b5797019 HTTP/1.1
+DELETE {{host}}/contacts/{{id}} HTTP/1.1
 
