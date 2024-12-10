@@ -1,5 +1,17 @@
 # Agenda telefônica
 
+Esse projeto foi um teste técnico feito em 3 dias com React, Nodejs, Express e MySQL. Posteriormente foi atualizado para fazer deploy na AWS S3 e usar seus serviços como AWS S3, AWS EC2 e AWS RDS, tudo provisionado com o Terraform. 
+
+Outras mudanças foram:
+
+- a atualização de todas as libs
+- o uso do Docker
+- uso do Typescript no React
+- uso do useReducer no React
+- CI/CD com GitHub Actions e testar localmente com Act
+
+## Sumário
+
 - [Ferramentas usadas](#ferramentas-usadas)
 - [Arquitetura do Sistema na AWS](#arquitetura-do-sistema-na-aws)
 - [Como executar com docker?](#como-executar-com-docker)
