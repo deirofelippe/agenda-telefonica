@@ -10,6 +10,10 @@ Outras mudanças foram:
 - uso do useReducer no React
 - CI/CD com GitHub Actions e testar localmente com Act
 
+A aplicação sendo usada pode ser vista no youtube, abaixo:
+
+[![Vídeo da versão 1 sendo usada (Docker)](https://img.youtube.com/vi/V1DiE-N3WCM/0.jpg)](https://www.youtube.com/watch?v=V1DiE-N3WCM)
+
 ## Sumário
 
 - [Ferramentas usadas](#ferramentas-usadas)
